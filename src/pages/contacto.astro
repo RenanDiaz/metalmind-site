@@ -1,0 +1,223 @@
+---
+import Base from '../layouts/Base.astro';
+import SeparadorArista from '../components/SeparadorArista.astro';
+import { waLink } from '../lib/whatsapp';
+import { PAGINA_CONTACTO } from '../data/paginas';
+
+const { form } = PAGINA_CONTACTO;
+const claseInput =
+  'mt-2 w-full rounded-sm border border-line-light bg-bone-raised px-3.5 py-3 text-ink placeholder:text-graphite';
+const claseLabel = 'block text-sm font-medium text-ink';
+---
+
+<Base
+  title={PAGINA_CONTACTO.metaTitle}
+  description={PAGINA_CONTACTO.metaDescription}
+  ogImage="/og/contacto.png"
+>
+  <section class="bg-ink">
+    <div class="container-site pt-14 pb-16 md:pt-20 md:pb-24">
+      <h1 class="display-1 max-w-[16ch] text-bone">{PAGINA_CONTACTO.titulo}</h1>
+      <p class="mt-5 max-w-[48ch] text-lg leading-relaxed text-steel">{PAGINA_CONTACTO.intro}</p>
+      <p class="mt-8">
+        <a href={waLink('contacto')} class="btn-primary">{PAGINA_CONTACTO.whatsappCta}</a>
+      </p>
+    </div>
+  </section>
+
+  <SeparadorArista de="ink" a="bone" />
+
+  <section class="bg-bone" aria-labelledby="form-titulo">
+    <div class="container-site max-w-3xl py-16 md:py-24" id="formulario">
+      <h2 id="form-titulo" class="display-2 text-ink">{form.titulo}</h2>
+
+      {/* Aviso de error: el camino sin JS redirige a /contacto?error=N#aviso
+          y el :target lo muestra; el JS lo muestra leyendo el query param. */}
+      <div id="aviso" class="mt-6 border border-coral-deep p-4 text-[0.9375rem] text-ink">
+        {form.errorGenerico}
+      </div>
+
+      <form
+        id="form-contacto"
+        method="post"
+        action="/api/contacto"
+        class="mt-8 flex flex-col gap-6"
+        data-enviando={form.enviando}
+        data-exito={form.exito}
+        data-error={form.errorGenerico}
+      >
+        <div class="grid gap-6 md:grid-cols-2">
+          <div>
+            <label for="nombre" class={claseLabel}>{form.nombre}</label>
+            <input
+              id="nombre"
+              name="nombre"
+              type="text"
+              required
+              minlength="2"
+              maxlength="80"
+              autocomplete="name"
+              class={claseInput}
+            />
+            <p data-error-de="nombre" class="mt-1.5 hidden text-sm text-coral-deep"></p>
+          </div>
+          <div>
+            <label for="negocio" class={claseLabel}>{form.negocio}</label>
+            <input
+              id="negocio"
+              name="negocio"
+              type="text"
+              maxlength="80"
+              autocomplete="organization"
+              class={claseInput}
+            />
+            <p data-error-de="negocio" class="mt-1.5 hidden text-sm text-coral-deep"></p>
+          </div>
+          <div>
+            <label for="correo" class={claseLabel}>{form.correo}</label>
+            <input
+              id="correo"
+              name="correo"
+              type="email"
+              required
+              maxlength="120"
+              autocomplete="email"
+              class={claseInput}
+            />
+            <p data-error-de="correo" class="mt-1.5 hidden text-sm text-coral-deep"></p>
+          </div>
+          <div>
+            <label for="telefono" class={claseLabel}>{form.telefono}</label>
+            <input
+              id="telefono"
+              name="telefono"
+              type="tel"
+              maxlength="20"
+              autocomplete="tel"
+              class={claseInput}
+            />
+            <p data-error-de="telefono" class="mt-1.5 hidden text-sm text-coral-deep"></p>
+          </div>
+        </div>
+
+        <div>
+          <label for="plan" class={claseLabel}>{form.plan}</label>
+          <select id="plan" name="plan" class={claseInput}>
+            <option value="">—</option>
+            {form.planOpciones.map((op) => <option value={op.valor}>{op.texto}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label for="mensaje" class={claseLabel}>{form.mensaje}</label>
+          <textarea
+            id="mensaje"
+            name="mensaje"
+            required
+            minlength="10"
+            maxlength="1000"
+            rows="5"
+            placeholder={form.mensajePlaceholder}
+            class={claseInput}></textarea>
+          <p data-error-de="mensaje" class="mt-1.5 hidden text-sm text-coral-deep"></p>
+        </div>
+
+        {/* Honeypot: oculto para personas, irresistible para bots */}
+        <div class="hidden" aria-hidden="true">
+          <label for="sitio_web">Sitio web</label>
+          <input id="sitio_web" name="sitio_web" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        {/* Trampa de tiempo: la llena el JS al cargar; sin JS llega vacía y se ignora */}
+        <input type="hidden" name="_t" id="campo-t" value="" />
+
+        <div class="flex flex-wrap items-center gap-5">
+          <button type="submit" class="btn-outline w-full text-ink md:w-auto md:min-w-44">
+            {form.enviar}
+          </button>
+          <p id="form-estado" role="status" aria-live="polite" class="text-[0.9375rem] font-medium text-ink"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  #aviso {
+    display: none;
+  }
+  #aviso:target {
+    display: block;
+  }
+</style>
+
+<script>
+  // Mejora progresiva del formulario (spec §7): sin este script, el POST
+  // nativo funciona igual y redirige a /contacto/gracias.
+  const form = document.getElementById('form-contacto') as HTMLFormElement | null;
+  const estado = document.getElementById('form-estado');
+  const campoT = document.getElementById('campo-t') as HTMLInputElement | null;
+  const aviso = document.getElementById('aviso');
+
+  if (campoT) campoT.value = String(Date.now());
+
+  // Un envío sin JS que falló vuelve con ?error=N: mostrar el aviso genérico
+  if (aviso && new URLSearchParams(location.search).has('error')) {
+    aviso.style.display = 'block';
+  }
+
+  const TEXTOS = {
+    enviando: form?.dataset.enviando ?? 'Enviando…',
+    exito: form?.dataset.exito ?? 'Recibido.',
+    error: form?.dataset.error ?? 'No se pudo enviar.',
+  };
+
+  const limpiarErrores = () => {
+    form?.querySelectorAll<HTMLElement>('[data-error-de]').forEach((el) => {
+      el.textContent = '';
+      el.classList.add('hidden');
+    });
+  };
+
+  form?.addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+    const boton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    limpiarErrores();
+    if (estado) estado.textContent = TEXTOS.enviando;
+    if (boton) boton.disabled = true;
+
+    try {
+      const respuesta = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const datos = (await respuesta.json()) as {
+        ok: boolean;
+        errores?: Record<string, string>;
+      };
+
+      if (datos.ok) {
+        form.reset();
+        if (campoT) campoT.value = String(Date.now());
+        if (estado) estado.textContent = TEXTOS.exito;
+      } else if (respuesta.status === 400 && datos.errores) {
+        if (estado) estado.textContent = '';
+        for (const [campo, mensaje] of Object.entries(datos.errores)) {
+          const destino = form.querySelector<HTMLElement>(`[data-error-de="${campo}"]`);
+          if (destino) {
+            destino.textContent = mensaje;
+            destino.classList.remove('hidden');
+          } else if (estado) {
+            estado.textContent = mensaje;
+          }
+        }
+      } else {
+        if (estado) estado.textContent = TEXTOS.error;
+      }
+    } catch {
+      if (estado) estado.textContent = TEXTOS.error;
+    } finally {
+      if (boton) boton.disabled = false;
+    }
+  });
+</script>

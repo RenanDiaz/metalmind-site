@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Hexagono from '../components/Hexagono.astro';
+import { PAGINA_404 } from '../data/paginas';
+---
+
+<Base title={PAGINA_404.metaTitle} description={PAGINA_404.texto} noindex>
+  <section class="relative overflow-hidden bg-ink">
+    <Hexagono
+      tenue
+      conNodo={false}
+      class="pointer-events-none absolute -right-16 -bottom-24 w-[340px]"
+    />
+    <div class="container-site relative py-24 md:py-40">
+      <p class="eyebrow text-graphite">Error 404</p>
+      <h1 class="display-1 mt-5 text-bone">{PAGINA_404.titulo}</h1>
+      <p class="mt-5 max-w-[44ch] text-lg leading-relaxed text-steel">{PAGINA_404.texto}</p>
+      <p class="mt-8">
+        <a href="/" class="btn-primary">{PAGINA_404.cta}</a>
+      </p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,102 @@
+---
+import { PROCESO } from '../data/home';
+
+/**
+ * El elemento firma del sitio: el cubo del logo desdoblado en el tiempo.
+ * Desktop: los pasos bajan en escalera unidos por tramos a 30° exactos
+ * (rise = 104px, dx = 104·√3, hipotenusa = 208px). Móvil: eje vertical —
+ * la vertical también es arista del hexágono. Línea 1px graphite, nodo
+ * coral por paso. Estático a propósito: el motion del sitio se gasta una
+ * sola vez, en el hexágono del hero.
+ */
+---
+
+<ol class="eje">
+  {
+    PROCESO.pasos.map((paso, i) => (
+      <li>
+        <span class="nodo" aria-hidden="true" />
+        <p class="eyebrow text-graphite">
+          0{i + 1} · {paso.tiempo}
+        </p>
+        <h3 class="display-3 mt-2 text-bone">{paso.nombre}</h3>
+        <p class="mt-1.5 max-w-[52ch] text-sm leading-normal text-steel">{paso.texto}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .eje {
+    position: relative;
+  }
+  /* Móvil: eje vertical continuo */
+  .eje::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background-color: var(--color-graphite);
+  }
+  .eje li {
+    position: relative;
+    padding-left: 2rem;
+    padding-bottom: 2.5rem;
+  }
+  .eje li:last-child {
+    padding-bottom: 0;
+  }
+  .nodo {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 11px;
+    height: 11px;
+    border-radius: 9999px;
+    background-color: var(--color-coral);
+    z-index: 1;
+  }
+
+  /* Desktop: escalera a 30° */
+  @media (width >= 48rem) {
+    .eje {
+      --rise: 104px;
+      --dx: 180.13px; /* 104·√3 → tramo a 30° exactos */
+      --hyp: 208px; /* rise / sin(30°) */
+    }
+    .eje::before {
+      display: none;
+    }
+    .eje li {
+      height: var(--rise);
+      padding-bottom: 0;
+      margin-left: calc(var(--n, 0) * var(--dx));
+    }
+    .eje li:nth-child(2) {
+      --n: 1;
+    }
+    .eje li:nth-child(3) {
+      --n: 2;
+    }
+    .eje li:nth-child(4) {
+      --n: 3;
+    }
+    .eje li:last-child {
+      height: auto;
+    }
+    /* Tramo diagonal desde el nodo anterior hasta el de este paso */
+    .eje li + li::before {
+      content: '';
+      position: absolute;
+      left: calc(5.5px - var(--dx));
+      top: calc(9.5px - var(--rise));
+      width: var(--hyp);
+      height: 1px;
+      background-color: var(--color-graphite);
+      transform: rotate(30deg);
+      transform-origin: left center;
+    }
+  }
+</style>

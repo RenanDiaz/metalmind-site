@@ -1,0 +1,94 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { waLink, type OrigenWhatsApp } from '../lib/whatsapp';
+
+/**
+ * Tarjeta de plan sobre fondo bone. La destacada no se escala ni cambia de
+ * fondo: borde ink, nodo coral en el vértice del corte y etiqueta "Más pedido".
+ * Solo la destacada lleva CTA coral (regla: un coral por pantalla).
+ */
+interface Props {
+  plan: CollectionEntry<'planes'>;
+}
+const { plan } = Astro.props;
+const { nombre, id, precioDesde, mantenimiento, paraQuien, incluye, entrega, destacado, ctaTexto } =
+  plan.data;
+const origen: OrigenWhatsApp = `plan-${id}`;
+---
+
+<article
+  class:list={[
+    'corner-cut flex h-full flex-col bg-bone-raised p-6 md:p-7',
+    destacado ? 'borde-destacado [--line:var(--color-ink)]' : 'borde-normal [--line:var(--color-line-light)]',
+  ]}
+>
+  {destacado && <span class="nodo-corte" aria-hidden="true" />}
+
+  <div class="flex items-baseline justify-between gap-3">
+    <h3 class="display-3 text-ink">{nombre}</h3>
+    {destacado && <span class="eyebrow text-coral-deep">Más pedido</span>}
+  </div>
+
+  <p class="mt-5">
+    {
+      precioDesde !== null ? (
+        <>
+          <span class="text-sm text-graphite-deep">desde </span>
+          <span class="precio text-ink">${precioDesde}</span>
+        </>
+      ) : (
+        <span class="precio text-ink">Cotización cerrada</span>
+      )
+    }
+  </p>
+  {
+    mantenimiento !== null && (
+      <p class="mt-1 text-sm text-graphite-deep">+ ${mantenimiento}/mes de mantenimiento</p>
+    )
+  }
+
+  <p class="mt-5 text-[0.9375rem] leading-relaxed text-ink">{paraQuien}</p>
+
+  <ul class="mt-5 flex flex-col gap-2 text-[0.9375rem] text-graphite-deep">
+    {
+      incluye.map((item) => (
+        <li class="flex gap-2.5">
+          <span class="mt-[9px] h-px w-3 shrink-0 bg-graphite-deep" aria-hidden="true" />
+          {item}
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="mt-5 text-sm text-graphite-deep">
+    Entrega: <span class="font-medium text-ink">{entrega}</span>
+  </p>
+
+  <p class="mt-6 flex flex-1 items-end">
+    <a
+      href={waLink(origen)}
+      class:list={['w-full', destacado ? 'btn-primary' : 'btn-outline text-ink']}
+    >
+      {ctaTexto}
+    </a>
+  </p>
+</article>
+
+<style>
+  .borde-normal {
+    border: 1px solid var(--color-line-light);
+  }
+  .borde-destacado {
+    border: 1px solid var(--color-ink);
+  }
+  /* Nodo coral en el vértice del corte: el lenguaje del logo señalando "aquí" */
+  .nodo-corte {
+    position: absolute;
+    top: 12px;
+    right: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background-color: var(--color-coral);
+  }
+</style>

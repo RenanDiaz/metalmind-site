@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import { waLink } from '../../lib/whatsapp';
+import { PAGINA_GRACIAS } from '../../data/paginas';
+---
+
+<Base
+  title={PAGINA_GRACIAS.metaTitle}
+  description={PAGINA_GRACIAS.metaDescription}
+  ogImage="/og/contacto.png"
+  noindex
+>
+  <section class="bg-ink">
+    <div class="container-site py-20 md:py-32">
+      <h1 class="display-1 text-bone">{PAGINA_GRACIAS.titulo}</h1>
+      <p class="mt-5 max-w-[44ch] text-lg leading-relaxed text-steel">{PAGINA_GRACIAS.texto}</p>
+      <p class="mt-10 text-steel">
+        {PAGINA_GRACIAS.whatsappNota}
+        <a href={waLink('contacto')} class="link-coral ml-2 font-medium text-bone">
+          {PAGINA_GRACIAS.whatsappCta}
+        </a>
+      </p>
+    </div>
+  </section>
+</Base>

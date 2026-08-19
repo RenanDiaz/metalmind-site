@@ -1,0 +1,38 @@
+---
+import { getCollection, render } from 'astro:content';
+
+/** Acordeón nativo <details>, sin JS. Sobre fondo bone. */
+const preguntas = (await getCollection('faq')).sort((a, b) => a.data.orden - b.data.orden);
+const items = await Promise.all(
+  preguntas.map(async (entrada) => ({
+    pregunta: entrada.data.pregunta,
+    Contenido: (await render(entrada)).Content,
+  }))
+);
+---
+
+<div class="border-t border-line-light">
+  {
+    items.map(({ pregunta, Contenido }) => (
+      <details class="group border-b border-line-light">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-medium text-ink [&::-webkit-details-marker]:hidden">
+          <span class="text-[1.0625rem]">{pregunta}</span>
+          <svg
+            class="faq-marker shrink-0 text-graphite-deep"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <line x1="7" y1="0" x2="7" y2="14" stroke="currentColor" stroke-width="1.5" />
+            <line x1="0" y1="7" x2="14" y2="7" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </summary>
+        <div class="max-w-[65ch] pb-6 leading-relaxed text-graphite-deep [&_p+p]:mt-3">
+          <Contenido />
+        </div>
+      </details>
+    ))
+  }
+</div>

@@ -1,0 +1,58 @@
+---
+/**
+ * El cubo del logo en trazo fino. Geometría exacta del mark
+ * (aristas a 30°/60°). Con `animado`, se dibuja al cargar (~700ms) y el
+ * nodo coral aparece al final; prefers-reduced-motion lo deja estático
+ * (el estado base de los keyframes es "dibujado", ver global.css).
+ */
+interface Props {
+  animado?: boolean;
+  /** Con nodo coral al centro */
+  conNodo?: boolean;
+  /** Color del trazo exterior/interior */
+  tenue?: boolean;
+  class?: string;
+}
+const { animado = false, conNodo = true, tenue = false, class: clase } = Astro.props;
+const trazoExterior = tenue ? 'var(--color-line-dark)' : 'var(--color-steel)';
+const trazoInterior = tenue ? 'var(--color-line-dark)' : 'var(--color-graphite)';
+---
+
+<svg
+  viewBox="0 0 120 120"
+  fill="none"
+  aria-hidden="true"
+  class:list={[clase, { 'hex-animado': animado }]}
+>
+  <polygon
+    points="60,8 105,34 105,86 60,112 15,86 15,34"
+    stroke={trazoExterior}
+    stroke-width="1.5"
+    pathLength="1"
+    class="hex-trazo"
+    vector-effect="non-scaling-stroke"></polygon>
+  <g stroke={trazoInterior} stroke-width="1" class="hex-aristas">
+    <line x1="60" y1="60" x2="60" y2="8" pathLength="1" class="hex-trazo" vector-effect="non-scaling-stroke"></line>
+    <line x1="60" y1="60" x2="105" y2="86" pathLength="1" class="hex-trazo" vector-effect="non-scaling-stroke"></line>
+    <line x1="60" y1="60" x2="15" y2="86" pathLength="1" class="hex-trazo" vector-effect="non-scaling-stroke"></line>
+  </g>
+  {conNodo && <circle cx="60" cy="60" r="5" fill="var(--color-coral)" class="hex-nodo" />}
+</svg>
+
+<style>
+  .hex-trazo {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0; /* estado base: dibujado (reduced-motion lo ve así) */
+  }
+  .hex-animado .hex-trazo {
+    --hex-len: 1;
+    animation: hex-draw 550ms ease-out backwards;
+  }
+  .hex-animado .hex-aristas .hex-trazo {
+    animation-delay: 250ms;
+    animation-duration: 450ms;
+  }
+  .hex-animado .hex-nodo {
+    animation: hex-node-in 200ms ease-out 700ms backwards;
+  }
+</style>
