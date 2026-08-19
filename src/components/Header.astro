@@ -1,0 +1,115 @@
+---
+import Lockup from './Lockup.astro';
+import { waLink } from '../lib/whatsapp';
+
+const nav = [
+  { href: '/trabajos', texto: 'Trabajos' },
+  { href: '/planes', texto: 'Planes' },
+  { href: '/contacto', texto: 'Contacto' },
+];
+const ruta = Astro.url.pathname;
+const esActivo = (href: string) => ruta === href || ruta.startsWith(`${href}/`);
+---
+
+<header id="site-header" class="sticky top-0 z-40 border-b border-line-dark bg-ink">
+  <div class="container-site header-inner flex items-center justify-between">
+    <a href="/" aria-label="MetalMind Studios — inicio" class="text-bone">
+      <Lockup />
+    </a>
+
+    <nav aria-label="Principal" class="hidden items-center gap-8 md:flex">
+      {
+        nav.map(({ href, texto }) => (
+          <a
+            href={href}
+            aria-current={esActivo(href) ? 'page' : undefined}
+            class:list={[
+              'text-[0.9375rem] font-medium transition-colors duration-150',
+              esActivo(href) ? 'link-coral text-bone' : 'text-steel hover:text-bone',
+            ]}
+          >
+            {texto}
+          </a>
+        ))
+      }
+      <a href={waLink('header')} class="btn-primary !px-5 !py-3 !text-[0.9375rem]">Cotizar</a>
+    </nav>
+
+    <button
+      id="menu-btn"
+      type="button"
+      class="text-bone -mr-2 p-2 md:hidden"
+      aria-expanded="false"
+      aria-controls="menu-movil"
+      aria-label="Abrir menú"
+    >
+      <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true">
+        <line x1="0" y1="1" x2="22" y2="1" stroke="currentColor" stroke-width="1.5"></line>
+        <line x1="0" y1="8" x2="22" y2="8" stroke="currentColor" stroke-width="1.5"></line>
+        <line x1="0" y1="15" x2="22" y2="15" stroke="currentColor" stroke-width="1.5"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="menu-movil" hidden class="border-t border-line-dark md:hidden">
+    <nav aria-label="Principal móvil" class="container-site flex flex-col py-2">
+      {
+        nav.map(({ href, texto }) => (
+          <a
+            href={href}
+            aria-current={esActivo(href) ? 'page' : undefined}
+            class:list={[
+              'border-b border-line-dark py-4 text-lg font-medium last:border-b-0',
+              esActivo(href) ? 'text-bone' : 'text-steel',
+            ]}
+          >
+            {texto}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header-inner {
+    height: 4.5rem;
+    transition: height 200ms ease;
+  }
+  :global(#site-header.compacto) .header-inner {
+    height: 3.5rem;
+  }
+</style>
+
+<script>
+  // JS de cliente autorizado (spec §9): header compactable + menú móvil.
+  const header = document.getElementById('site-header');
+  let compacto = false;
+  const alDesplazar = () => {
+    const debeCompactar = window.scrollY > 24;
+    if (debeCompactar !== compacto) {
+      compacto = debeCompactar;
+      header?.classList.toggle('compacto', compacto);
+    }
+  };
+  window.addEventListener('scroll', alDesplazar, { passive: true });
+  alDesplazar();
+
+  const boton = document.getElementById('menu-btn');
+  const panel = document.getElementById('menu-movil');
+  const alternarMenu = (abrir: boolean) => {
+    if (!boton || !panel) return;
+    boton.setAttribute('aria-expanded', String(abrir));
+    boton.setAttribute('aria-label', abrir ? 'Cerrar menú' : 'Abrir menú');
+    panel.hidden = !abrir;
+  };
+  boton?.addEventListener('click', () => {
+    alternarMenu(boton.getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && boton?.getAttribute('aria-expanded') === 'true') {
+      alternarMenu(false);
+      boton.focus();
+    }
+  });
+</script>

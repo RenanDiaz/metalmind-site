@@ -1,0 +1,31 @@
+---
+/**
+ * Lockup en HTML: símbolo SVG + wordmark tipográfico.
+ * Los SVG de lockup (public/brand) tienen <text> sin convertir a curvas y
+ * referencian fuentes que el sitio no carga; este componente garantiza un
+ * wordmark idéntico en todos los navegadores.
+ * TODO: cuando existan lockups con texto en curvas, evaluar volver al SVG.
+ */
+interface Props {
+  /** Tamaño del símbolo en px */
+  tamano?: number;
+}
+const { tamano = 34 } = Astro.props;
+---
+
+<span class="inline-flex items-center gap-3">
+  <img
+    src="/brand/metalmind-mark.svg"
+    alt=""
+    width={tamano}
+    height={tamano}
+    class="shrink-0"
+    style={`width: ${tamano}px; height: ${tamano}px;`}
+  />
+  <span class="leading-none">
+    <span class="block font-display text-[1.125rem] font-bold tracking-[-0.02em] text-bone"
+      >MetalMind</span
+    >
+    <span class="eyebrow mt-[5px] block text-[0.625rem] text-graphite">Studios</span>
+  </span>
+</span>

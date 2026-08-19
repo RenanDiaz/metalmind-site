@@ -1,0 +1,72 @@
+---
+/**
+ * Transición entre secciones ink/bone con el perfil de una arista del cubo:
+ * horizontal → tramo a 30° exactos → horizontal. No es un corte diagonal a lo
+ * ancho (a 30° sobre 1440px mediría ~830px); es la arista del logo, a escala.
+ * La línea de 1px en graphite recorre el borde.
+ */
+interface Props {
+  /** Color de la sección de arriba */
+  de: 'ink' | 'bone';
+  /** Color de la sección de abajo */
+  a: 'ink' | 'bone';
+}
+const { de, a } = Astro.props;
+const colores = { ink: 'var(--color-ink)', bone: 'var(--color-bone)' } as const;
+---
+
+<div
+  class="arista"
+  role="presentation"
+  style={`--color-de: ${colores[de]}; --color-a: ${colores[a]};`}
+>
+</div>
+
+<style>
+  .arista {
+    /* run/rise a 30° exactos: rise = run·tan(30°) */
+    --x1: 18%;
+    --run: 84px;
+    --rise: 48.5px;
+    position: relative;
+    height: var(--rise);
+    background-color: var(--color-a);
+    overflow: hidden;
+  }
+  @media (width >= 48rem) {
+    .arista {
+      --x1: 24%;
+      --run: 168px;
+      --rise: 97px;
+    }
+  }
+
+  /* Región superior: el color de la sección de arriba, recortado por la arista.
+     El -1px superior solapa la sección anterior para que el redondeo del
+     clip-path no deje un hairline del color de fondo. */
+  .arista::before {
+    content: '';
+    position: absolute;
+    inset: -1px 0 0 0;
+    background-color: var(--color-de);
+    clip-path: polygon(
+      var(--x1) 0,
+      100% 0,
+      100% 100%,
+      calc(var(--x1) + var(--run)) 100%
+    );
+  }
+
+  /* La línea de 1px: tramo diagonal (los horizontales los da el contraste de color) */
+  .arista::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--x1);
+    width: calc(2 * var(--rise)); /* hipotenusa: sin(30°) = 1/2 */
+    height: 1px;
+    background-color: var(--color-graphite);
+    transform: rotate(30deg);
+    transform-origin: top left;
+  }
+</style>

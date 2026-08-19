@@ -1,0 +1,12 @@
+<!-- TODO: re-exportar con el texto convertido a curvas (Space Grotesk / Chakra Petch
+     no se cargan en el sitio; en el header se usa el lockup en HTML, no este archivo). -->
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120">
+<g><polygon points="60,8 105,34 105,86 60,112 15,86 15,34" fill="none" stroke="#191412" stroke-width="8"></polygon>
+<line x1="60" y1="60" x2="60" y2="8" stroke="#191412" stroke-width="5"></line>
+<line x1="60" y1="60" x2="105" y2="86" stroke="#191412" stroke-width="5"></line>
+<line x1="60" y1="60" x2="15" y2="86" stroke="#191412" stroke-width="5"></line>
+<circle cx="60" cy="8" r="8" fill="#191412"></circle><circle cx="105" cy="86" r="8" fill="#191412"></circle><circle cx="15" cy="86" r="8" fill="#191412"></circle>
+<circle cx="60" cy="60" r="12" fill="#191412"></circle></g>
+<text x="135" y="66" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="34" letter-spacing="-0.4" fill="#191412">MetalMind</text>
+<text x="137" y="92" font-family="'Chakra Petch',sans-serif" font-weight="500" font-size="13" letter-spacing="5.5" fill="#5E5852">STUDIOS</text>
+</svg>

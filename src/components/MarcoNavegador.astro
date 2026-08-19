@@ -1,0 +1,19 @@
+---
+/** Marco de navegador mínimo para capturas: barra con tres puntos, nada más. */
+interface Props {
+  class?: string;
+}
+const { class: clase } = Astro.props;
+---
+
+<figure class:list={['overflow-hidden rounded-sm border border-line-light bg-bone-raised', clase]}>
+  <div
+    class="flex h-7 items-center gap-1.5 border-b border-line-light px-3"
+    aria-hidden="true"
+  >
+    <span class="size-1.5 rounded-full bg-steel"></span>
+    <span class="size-1.5 rounded-full bg-steel"></span>
+    <span class="size-1.5 rounded-full bg-steel"></span>
+  </div>
+  <slot />
+</figure>

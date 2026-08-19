@@ -1,0 +1,147 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import MarcoNavegador from '../../components/MarcoNavegador.astro';
+import SeparadorArista from '../../components/SeparadorArista.astro';
+import { waLink } from '../../lib/whatsapp';
+import { migasJsonLd } from '../../lib/jsonld';
+import { PAGINA_TRABAJOS } from '../../data/paginas';
+
+export async function getStaticPaths() {
+  const trabajos = (await getCollection('trabajos', ({ data }) => data.publicado)).sort(
+    (a, b) => a.data.orden - b.data.orden
+  );
+  return trabajos.map((trabajo, i) => ({
+    params: { slug: trabajo.id },
+    props: {
+      trabajo,
+      anterior: trabajos[i - 1] ?? null,
+      siguiente: trabajos[i + 1] ?? null,
+    },
+  }));
+}
+
+const { trabajo, anterior, siguiente } = Astro.props;
+const { nombre, sector, ubicacion, plan, entrega, captura, capturaAlt, descripcion, esDemo } =
+  trabajo.data;
+const { Content } = await render(trabajo);
+
+const NOMBRE_PLAN = { base: 'Base', negocio: 'Negocio', 'a-medida': 'A medida' } as const;
+---
+
+<Base
+  title={`${nombre} — MetalMind Studios`}
+  description={descripcion}
+  ogImage="/og/trabajos.png"
+  jsonLd={[
+    migasJsonLd([
+      { nombre: 'Inicio', ruta: '/' },
+      { nombre: 'Trabajos', ruta: '/trabajos' },
+      { nombre, ruta: `/trabajos/${trabajo.id}` },
+    ]),
+  ]}
+>
+  <section class="bg-ink">
+    <div class="container-site pt-14 pb-14 md:pt-20 md:pb-20">
+      <nav aria-label="Migas" class="mb-8">
+        <a href="/trabajos" class="link-coral text-sm font-medium text-steel hover:text-bone"
+          >← Trabajos</a
+        >
+      </nav>
+      <p class="eyebrow text-graphite">{sector} · {ubicacion}</p>
+      <div class="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+        <h1 class="display-1 text-bone">{nombre}</h1>
+        {esDemo && <span class="eyebrow text-graphite">Proyecto demo</span>}
+      </div>
+    </div>
+  </section>
+
+  <SeparadorArista de="ink" a="bone" />
+
+  <section class="bg-bone">
+    <div class="container-site py-14 md:py-20">
+      <MarcoNavegador class="mx-auto max-w-4xl">
+        <Picture
+          src={captura}
+          alt={capturaAlt}
+          widths={[640, 1024, 1600]}
+          sizes="(min-width: 1024px) 896px, 92vw"
+          formats={['avif', 'webp']}
+          fallbackFormat="webp"
+          loading="eager"
+          class="w-full"
+        />
+      </MarcoNavegador>
+
+      <div class="prose-caso mx-auto mt-14 max-w-[68ch]">
+        <Content />
+      </div>
+
+      <dl class="mx-auto mt-12 flex max-w-[68ch] flex-wrap gap-x-12 gap-y-4 border-t border-line-light pt-6">
+        <div>
+          <dt class="eyebrow text-graphite-deep">Plan</dt>
+          <dd class="mt-2 font-medium text-ink">{NOMBRE_PLAN[plan]}</dd>
+        </div>
+        <div>
+          <dt class="eyebrow text-graphite-deep">Entrega</dt>
+          <dd class="mt-2 font-medium text-ink">{entrega}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <SeparadorArista de="bone" a="ink" />
+
+  <section class="bg-ink">
+    <div class="container-site py-16 md:py-24">
+      <h2 class="display-2 max-w-[24ch] text-bone">{PAGINA_TRABAJOS.ctaTitulo}</h2>
+      <p class="mt-7">
+        <a href={waLink('trabajos')} class="btn-primary">{PAGINA_TRABAJOS.cta}</a>
+      </p>
+
+      <nav
+        aria-label="Otros casos"
+        class="mt-16 flex flex-wrap justify-between gap-4 border-t border-line-dark pt-6 text-[0.9375rem]"
+      >
+        {
+          anterior ? (
+            <a href={`/trabajos/${anterior.id}`} class="link-coral font-medium text-steel hover:text-bone">
+              ← {anterior.data.nombre}
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          siguiente && (
+            <a href={`/trabajos/${siguiente.id}`} class="link-coral font-medium text-steel hover:text-bone">
+              {siguiente.data.nombre} →
+            </a>
+          )
+        }
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Cuerpo markdown del caso: ## El problema / ## Qué hice / ## El resultado */
+  .prose-caso :global(h2) {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.375rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin-top: 2.5rem;
+  }
+  .prose-caso :global(h2:first-child) {
+    margin-top: 0;
+  }
+  .prose-caso :global(p) {
+    margin-top: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-graphite-deep);
+  }
+</style>
