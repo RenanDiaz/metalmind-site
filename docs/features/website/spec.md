@@ -9,37 +9,24 @@
 
 ---
 
-## 0. Preguntas abiertas (responder antes de codear)
+## 0. Decisiones tomadas (2026-08-19, confirmadas por Renan)
 
-1. **Coral del logo vs. coral del brief.** El nodo en los SVG reales es `#E04638`
-   (rojo-naranja); el token `coral` del brief es `#F04E68` (coral rosado). Si uso el
-   token del brief, los CTAs no van a coincidir con el nodo del logo en el header.
-   Opciones: (a) alinear el token al logo (`#E04638`), (b) re-exportar los SVG con
-   `#F04E68`. Recomiendo (b): `#F04E68` contrasta mejor sobre `ink` y el brief lo
-   declara como fuente de verdad. Mientras no se decida, la spec usa `#F04E68`.
-2. **Los lockups tienen `<text>` sin convertir a trazados.** Referencian
-   Space Grotesk y Chakra Petch, que no vamos a cargar: en el navegador el wordmark
-   se renderiza con una fuente de fallback y se ve mal. Necesito que re-exportes los
-   lockups con el texto convertido a curvas (outline). No voy a reconstruir el logo a
-   mano, como pediste; mientras tanto uso los archivos tal cual y lo dejo anotado con
-   `TODO` en el código.
-3. **Nombres de archivo.** El brief dice `metalmind-mark.svg` / `metalmind-lockup.svg` /
-   `metalmind-lockup-dark.svg`; en el repo existen `metalmind-simbolo.svg`,
-   `metalmind-lockup-oscuro.svg` (trazo claro, para fondos oscuros) y
-   `metalmind-lockup-claro.svg` (trazo oscuro, para fondos claros), más
-   `metalmind-favicon.svg`. Uso los nombres existentes; no renombro nada.
-4. **Datos de contacto reales** ⚠️ CONFIRMAR: número de WhatsApp, correo público,
-   handle de Instagram. La spec usa placeholders `507XXXXXXXX`,
-   `hola@metalmindstudios.com`, `@metalmindstudios`.
-5. **Precios** ⚠️ CONFIRMAR (los del brief se usan como punto de partida).
-6. **Sugerencia — etiqueta "demo" visible.** El brief pide marcar los casos ficticios
-   solo en el código. Sugiero además una etiqueta discreta visible ("Proyecto demo")
-   en cada caso: el ángulo de venta es la honestidad, y presentar demos como clientes
-   reales lo contradice. Si la rechazas, quedan marcados solo en código.
-7. **Titular del hero.** Mantengo el tuyo ("Tu negocio existe. Tu sitio web, no.") —
-   es la tesis y está bien. Alternativa por si la quieres considerar:
-   "Tu negocio existe. En Google, todavía no." (ancla el problema en la búsqueda,
-   que es donde duele). La spec asume el original.
+1. **Coral:** `#F04E68` en todo — tokens y SVGs de marca (editados para coincidir).
+2. **Lockups con `<text>`:** pendiente re-exportar con el texto en curvas. Mientras
+   tanto, el header usa lockup en HTML (símbolo SVG + wordmark en Archivo/Plex Mono);
+   los SVG de lockup quedan con `TODO` para uso externo.
+3. **Nombres de archivo:** renombrados al estándar del brief —
+   `metalmind-mark.svg`, `metalmind-lockup.svg` (para fondos oscuros),
+   `metalmind-lockup-dark.svg` (trazo oscuro, para fondos claros),
+   `metalmind-favicon.svg`.
+4. **Contacto:** WhatsApp `+507 6388-8475` (`wa.me/50763888475`). Correo temporal
+   `renandiazreyes@gmail.com` hasta comprar el dominio
+   (`TODO: cambiar a hola@metalmindstudios.com`). Instagram: sin handle confirmado —
+   no se publica link hasta tenerlo (`TODO` en footer).
+5. **Precios:** confirmados tal como están en §3.4.
+6. **Etiqueta "demo" visible:** aprobada — cada caso lleva "Proyecto demo" visible
+   además del `TODO` en código.
+7. **Titular del hero:** se mantiene "Tu negocio existe. Tu sitio web, no."
 
 ---
 
@@ -63,9 +50,9 @@ footer y en el registro de primera persona de todo el copy.
 ## 2. Elementos globales
 
 ### Header (todas las páginas)
-- Lockup horizontal a la izquierda (`metalmind-lockup-oscuro.svg` sobre `ink`,
-  `metalmind-lockup-claro.svg` si el header cruza sección clara — el header es
-  siempre `ink`, así que se usa el oscuro).
+- Lockup horizontal a la izquierda, construido en HTML: `metalmind-mark.svg` +
+  wordmark en Archivo 700 / "STUDIOS" en Plex Mono (los SVG de lockup tienen texto
+  sin convertir a curvas; ver decisión #2 del §0).
 - Links: **Trabajos · Planes · Contacto**.
 - Botón coral **"Cotizar"** → `wa.me` (mensaje origen `header`).
 - Sticky; se compacta al hacer scroll (72px → 56px). Fondo sólido `ink`,
@@ -79,15 +66,16 @@ footer y en el registro de primera persona de todo el copy.
 - `padding-bottom: env(safe-area-inset-bottom)`.
 
 ### Footer (todas las páginas)
-- Fondo `ink`. Lockup, y en una línea: WhatsApp (link), `hola@metalmindstudios.com`
-  ⚠️ CONFIRMAR, Instagram ⚠️ CONFIRMAR.
+- Fondo `ink`. Lockup, y en una línea: WhatsApp (link) y `renandiazreyes@gmail.com`
+  (`TODO: cambiar a hola@metalmindstudios.com` al comprar dominio). Instagram queda
+  como `TODO` comentado hasta confirmar el handle.
 - Línea legal-humana: "MetalMind Studios · Panamá · 2026" (año en build).
 - Micro-línea de identidad: "Diseñado y construido por una persona. Esa persona te
   contesta el WhatsApp."
 
 ### Enlaces de WhatsApp (mensajes precargados por origen)
 
-Formato: `https://wa.me/507XXXXXXXX?text=<encoded>` ⚠️ CONFIRMAR número.
+Formato: `https://wa.me/50763888475?text=<encoded>`.
 Centralizado en `src/lib/whatsapp.ts` — un helper `waLink(origen)`:
 
 | Origen | Mensaje precargado |
@@ -212,8 +200,8 @@ cómo."
 - H2: **Casos**
 - Tres tarjetas: captura en marco de navegador mínimo (barra 1px + tres puntos en
   `steel`), nombre, problema en una línea, resultado en una línea, link al caso.
-- Cada caso lleva etiqueta visible "Proyecto demo" (pendiente de tu ok, pregunta
-  abierta #6) y `TODO: reemplazar por cliente real` en el código.
+- Cada caso lleva etiqueta visible "Proyecto demo" y
+  `TODO: reemplazar por cliente real` en el código.
 - Link final: "Ver los tres casos →" `/trabajos`
 
 Casos (ficticios, sin métricas inventadas — detalle completo en §5):
@@ -267,7 +255,7 @@ Casos (ficticios, sin métricas inventadas — detalle completo en §5):
 ### /trabajos/[slug]
 Estructura por caso (campos en la collection, §6):
 1. Eyebrow con sector y ubicación (`CLÍNICA DENTAL · BELLA VISTA, PANAMÁ`)
-2. H1 = nombre del negocio · etiqueta "Proyecto demo" (pendiente pregunta #6)
+2. H1 = nombre del negocio · etiqueta "Proyecto demo"
 3. Captura grande en marco de navegador
 4. **El problema** — 2–3 frases
 5. **Qué hice** — viñetas de entregables (en lenguaje de cliente, sin tecnologías)
@@ -406,9 +394,11 @@ export const collections = { trabajos, planes, faq };
 1. Honeypot lleno o `_t` demasiado rápido → responder **como éxito** (no avisar al bot).
 2. Validación falla → ver respuestas abajo.
 3. Éxito → email vía **Resend** (`POST https://api.resend.com/emails`):
-   - `from: MetalMind Studios <hola@metalmindstudios.com>` ⚠️ CONFIRMAR dominio
-     verificado en Resend
-   - `to: env.CONTACTO_TO`
+   - `from: env.CONTACTO_FROM` — mientras no haya dominio verificado en Resend,
+     `onboarding@resend.dev` (modo prueba: solo entrega al correo del dueño de la
+     cuenta; suficiente porque el destino es `renandiazreyes@gmail.com`).
+     `TODO: verificar metalmindstudios.com en Resend y cambiar el from`.
+   - `to: env.CONTACTO_TO` (por ahora `renandiazreyes@gmail.com`)
    - `reply_to`: correo del remitente
    - `subject: "Contacto web: {nombre}" + (negocio ? " — {negocio}" : "")`
    - Cuerpo: texto plano con todos los campos + origen (`plan` si vino).
@@ -452,14 +442,14 @@ por campo. Si prefieres cero JS aquí, se elimina y queda solo el camino nativo.
   - **/trabajos:** "Casos de sitios web para negocios locales: el problema que
     tenían y qué cambió con la página nueva."
   - **/planes:** "Planes desde $450 con mantenimiento mensual que incluye hosting,
-    dominio y cambios. Precios claros, sin 'consultar'." ⚠️ cifra sujeta a confirmación
+    dominio y cambios. Precios claros, sin 'consultar'."
   - **/contacto:** "Cotiza tu sitio web por WhatsApp o formulario. Respondo el mismo
     día hábil. Yappy, ACH o efectivo."
   - Cada `/trabajos/[slug]`: descripción manual en el frontmatter del caso.
 - OG: imagen social 1200×630 por página (5 estáticas, diseñadas con la marca:
   fondo `ink`, hexágono, título de página en Archivo). `og:locale = es_PA`.
 - JSON-LD: `ProfessionalService` (subtipo de LocalBusiness) en home — nombre,
-  área servida (Panamá), teléfono ⚠️, URL; `Service` + `Offer` por plan en
+  área servida (Panamá), teléfono +507 6388-8475, URL; `Service` + `Offer` por plan en
   `/planes`; `BreadcrumbList` en casos; `FAQPage` en `/planes` (donde vive el FAQ
   canónico para no duplicar el markup en home).
 - `@astrojs/sitemap` + `robots.txt` estático apuntando al sitemap.
@@ -540,7 +530,9 @@ public/
 - [ ] 404 útil.
 
 **Pre-lanzamiento (manual, con el dueño):**
-- [ ] Precios confirmados. Número de WhatsApp, correo e Instagram reales.
-- [ ] Dominio de Resend verificado; email de prueba recibido.
-- [ ] Decisión del coral (#F04E68 vs #E04638) aplicada en tokens y SVGs.
+- [x] Precios confirmados. WhatsApp +507 6388-8475. Correo temporal renandiazreyes@gmail.com.
+- [ ] Comprar dominio metalmindstudios.com; cambiar correo público y from de Resend.
+- [ ] Email de prueba del formulario recibido (RESEND_API_KEY configurada en Pages).
+- [x] Coral #F04E68 aplicado en tokens y SVGs.
 - [ ] Lockups re-exportados con texto en curvas.
+- [ ] Confirmar handle de Instagram y activar el link del footer.

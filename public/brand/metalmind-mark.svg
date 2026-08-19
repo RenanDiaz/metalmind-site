@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><polygon points="60,8 105,34 105,86 60,112 15,86 15,34" fill="none" stroke="#CFCBC7" stroke-width="8"></polygon>
+<line x1="60" y1="60" x2="60" y2="8" stroke="#8A8481" stroke-width="5"></line>
+<line x1="60" y1="60" x2="105" y2="86" stroke="#8A8481" stroke-width="5"></line>
+<line x1="60" y1="60" x2="15" y2="86" stroke="#8A8481" stroke-width="5"></line>
+<circle cx="60" cy="8" r="8" fill="#CFCBC7"></circle><circle cx="105" cy="86" r="8" fill="#CFCBC7"></circle><circle cx="15" cy="86" r="8" fill="#CFCBC7"></circle>
+<circle cx="60" cy="60" r="12" fill="#F04E68"></circle></svg>

@@ -16,7 +16,7 @@
   --color-bone:         #EAE6E2;  /* texto sobre oscuro; fondo de secciones claras */
   --color-steel:        #CFCBC7;  /* trazos, bordes, texto secundario sobre ink */
   --color-graphite:     #8A8481;  /* terciario sobre ink; aristas "traseras" */
-  --color-coral:        #F04E68;  /* acento único — ⚠️ pendiente decisión vs #E04638 del logo */
+  --color-coral:        #F04E68;  /* acento único — SVGs de marca alineados a este valor */
 
   /* Derivados (necesarios, no decorativos) */
   --color-graphite-deep:#5E5852;  /* terciario sobre bone — graphite puro falla AA en claro */
