@@ -88,8 +88,12 @@ scroll, sin parallax.
 
 ## Pendientes conocidos (TODOs en código)
 
-- Comprar dominio → cambiar `correo` en `src/data/site.ts` y `CONTACTO_FROM`
-  (Resend con dominio verificado) en `functions/api/contacto.ts`.
+- Comprar dominio → cambiar `correo` en `src/data/site.ts`, `CONTACTO_FROM`
+  (Resend con dominio verificado) en `functions/api/contacto.ts`, y **eliminar
+  `PUBLIC_SITE_URL` del build**. Mientras tanto esa variable debe definirse en
+  Cloudflare con la URL real del deploy (workers.dev) para que `og:image`,
+  canonical y sitemap apunten a un dominio vivo — sin ella, WhatsApp no puede
+  descargar la imagen de la vista previa.
 - Confirmar handle de Instagram → activar link en `Footer.astro`.
 - Re-exportar lockups SVG con texto en curvas (hoy el header usa `Lockup.astro` en HTML).
 - Configurar `PUBLIC_CF_BEACON_TOKEN` (Cloudflare Web Analytics) en Pages.
