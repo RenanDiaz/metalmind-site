@@ -3,7 +3,14 @@
  * El cubo del logo en trazo fino. Geometría exacta del mark
  * (aristas a 30°/60°). Con `animado`, se dibuja al cargar (~700ms) y el
  * nodo coral aparece al final; prefers-reduced-motion lo deja estático
- * (el estado base de los keyframes es "dibujado", ver global.css).
+ * (sin animación no hay dasharray, así que aparece completo).
+ *
+ * Ojo con `vector-effect="non-scaling-stroke"`: Chromium calcula el patrón
+ * de guiones en espacio de pantalla e ignora la normalización de
+ * `pathLength`, así que combinado con el dibujado por dash el trazo queda
+ * incompleto. La variante animada prescinde del vector-effect y compensa
+ * con grosores en unidades del viewBox (120 ≈ 176–340px renderizados);
+ * la estática no usa dashes y conserva el trazo de 1px exacto.
  */
 interface Props {
   animado?: boolean;
@@ -16,6 +23,9 @@ interface Props {
 const { animado = false, conNodo = true, tenue = false, class: clase } = Astro.props;
 const trazoExterior = tenue ? 'var(--color-line-dark)' : 'var(--color-steel)';
 const trazoInterior = tenue ? 'var(--color-line-dark)' : 'var(--color-graphite)';
+const grosorExterior = animado ? 0.55 : 1.5;
+const grosorInterior = animado ? 0.37 : 1;
+const efecto = animado ? undefined : 'non-scaling-stroke';
 ---
 
 <svg
@@ -27,25 +37,25 @@ const trazoInterior = tenue ? 'var(--color-line-dark)' : 'var(--color-graphite)'
   <polygon
     points="60,8 105,34 105,86 60,112 15,86 15,34"
     stroke={trazoExterior}
-    stroke-width="1.5"
+    stroke-width={grosorExterior}
     pathLength="1"
     class="hex-trazo"
-    vector-effect="non-scaling-stroke"></polygon>
-  <g stroke={trazoInterior} stroke-width="1" class="hex-aristas">
-    <line x1="60" y1="60" x2="60" y2="8" pathLength="1" class="hex-trazo" vector-effect="non-scaling-stroke"></line>
-    <line x1="60" y1="60" x2="105" y2="86" pathLength="1" class="hex-trazo" vector-effect="non-scaling-stroke"></line>
-    <line x1="60" y1="60" x2="15" y2="86" pathLength="1" class="hex-trazo" vector-effect="non-scaling-stroke"></line>
+    vector-effect={efecto}></polygon>
+  <g stroke={trazoInterior} stroke-width={grosorInterior} class="hex-aristas">
+    <line x1="60" y1="60" x2="60" y2="8" pathLength="1" class="hex-trazo" vector-effect={efecto}></line>
+    <line x1="60" y1="60" x2="105" y2="86" pathLength="1" class="hex-trazo" vector-effect={efecto}></line>
+    <line x1="60" y1="60" x2="15" y2="86" pathLength="1" class="hex-trazo" vector-effect={efecto}></line>
   </g>
   {conNodo && <circle cx="60" cy="60" r="5" fill="var(--color-coral)" class="hex-nodo" />}
 </svg>
 
 <style>
-  .hex-trazo {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 0; /* estado base: dibujado (reduced-motion lo ve así) */
-  }
+  /* El dash solo existe en la variante animada; al terminar la animación
+     el offset base (0) deja el trazo completo. */
   .hex-animado .hex-trazo {
     --hex-len: 1;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
     animation: hex-draw 550ms ease-out backwards;
   }
   .hex-animado .hex-aristas .hex-trazo {

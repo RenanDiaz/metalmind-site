@@ -3,11 +3,14 @@ import { PROCESO } from '../data/home';
 
 /**
  * El elemento firma del sitio: el cubo del logo desdoblado en el tiempo.
- * Desktop: los pasos bajan en escalera unidos por tramos a 30° exactos
- * (rise = 104px, dx = 104·√3, hipotenusa = 208px). Móvil: eje vertical —
- * la vertical también es arista del hexágono. Línea 1px graphite, nodo
- * coral por paso. Estático a propósito: el motion del sitio se gasta una
- * sola vez, en el hexágono del hero.
+ * Desktop: los pasos bajan en escalera; de cada nodo cae una vertical
+ * (la vertical también es arista del hexágono) que libra el bloque de
+ * texto, y de su pie sale el tramo a 30° exactos hasta el nodo siguiente
+ * (caída = 104px, dx = 104·√3, hipotenusa = 208px). Recto nodo-a-nodo el
+ * tramo atravesaría el párrafo: el texto (52ch) es más ancho que dx.
+ * Móvil y tablet: eje vertical. Línea 1px graphite, nodo coral por paso.
+ * Estático a propósito: el motion del sitio se gasta una sola vez, en el
+ * hexágono del hero.
  */
 ---
 
@@ -59,12 +62,15 @@ import { PROCESO } from '../data/home';
     z-index: 1;
   }
 
-  /* Desktop: escalera a 30° */
-  @media (width >= 48rem) {
+  /* Desktop: escalera vertical + 30°. En md la escalera no cabe
+     (3·dx = 540px dejan al último paso sin ancho), así que entra en lg. */
+  @media (width >= 64rem) {
     .eje {
-      --rise: 104px;
+      --caida: 104px; /* caída vertical del tramo a 30° */
       --dx: 180.13px; /* 104·√3 → tramo a 30° exactos */
-      --hyp: 208px; /* rise / sin(30°) */
+      --hyp: 208px; /* caída / sin(30°) */
+      --vertical: 104px; /* baja del nodo por debajo del texto (~96px) */
+      --rise: 208px; /* vertical + caída: alto de cada paso */
     }
     .eje::before {
       display: none;
@@ -86,12 +92,22 @@ import { PROCESO } from '../data/home';
     .eje li:last-child {
       height: auto;
     }
-    /* Tramo diagonal desde el nodo anterior hasta el de este paso */
+    /* Vertical que cae del nodo, a la izquierda del texto */
+    .eje li:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 9.5px;
+      width: 1px;
+      height: var(--vertical);
+      background-color: var(--color-graphite);
+    }
+    /* Tramo a 30° desde el pie de la vertical anterior hasta este nodo */
     .eje li + li::before {
       content: '';
       position: absolute;
       left: calc(5.5px - var(--dx));
-      top: calc(9.5px - var(--rise));
+      top: calc(9.5px - var(--caida));
       width: var(--hyp);
       height: 1px;
       background-color: var(--color-graphite);
