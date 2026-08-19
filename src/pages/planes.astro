@@ -41,7 +41,7 @@ const faqParaJsonLd = faqEntradas.map((entrada) => ({
   <section class="bg-bone" aria-label="Planes">
     <div class="container-site py-16 md:py-24">
       <div class="grid gap-6 md:grid-cols-3">
-        {planes.map((plan) => <TarjetaPlan plan={plan} />)}
+        {planes.map((plan) => <TarjetaPlan plan={plan} nivelTitulo="h2" />)}
       </div>
 
       {/* Detalle extendido de cada plan */}

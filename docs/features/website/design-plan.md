@@ -21,6 +21,7 @@
   /* Derivados (necesarios, no decorativos) */
   --color-graphite-deep:#5E5852;  /* terciario sobre bone — graphite puro falla AA en claro */
   --color-coral-deep:   #D93A55;  /* hover/active del CTA */
+  --color-coral-texto:  #B02540;  /* texto coral sobre bone (coral y coral-deep fallan AA en claro) */
   --color-bone-raised:  #F2EFEC;  /* tarjetas sobre bone (un paso más claro, sin sombras) */
   --color-line-dark:    #3A322E;  /* borde 1px sobre ink (steel al ~20% aplanado) */
   --color-line-light:   #D8D3CE;  /* borde 1px sobre bone */

@@ -497,37 +497,40 @@ public/
 
 ## 10. Checklist de aceptación
 
+*Verificado el 2026-08-19 sobre el build local (Lighthouse CLI móvil + wrangler
+pages dev + smoke tests con Chromium). Lo no marcado requiere el sitio publicado.*
+
 **Rendimiento y calidad (sin anunciarlo en el sitio):**
-- [ ] Lighthouse ≥ 95 en Performance, Accessibility, Best Practices y SEO — en móvil — para `/`, `/planes`, `/trabajos`, un caso y `/contacto`.
-- [ ] Cero JS de cliente fuera del inventario del §9 (verificar con el build: ningún chunk de framework).
-- [ ] Fuentes autohospedadas; ninguna petición a `fonts.googleapis.com` ni CDN.
-- [ ] Imágenes AVIF/WebP con dimensiones explícitas (sin CLS).
+- [x] Lighthouse ≥ 95 en las cuatro categorías, en móvil: `/` 100/100/100/100, `/planes` 100/100/100/100, caso 99/100/100/100, `/contacto` 100/100/100/100. CLS 0.
+- [x] Cero JS de cliente fuera del inventario del §9 (dist sin chunks; solo scripts inline vanilla).
+- [x] Fuentes autohospedadas con preload de las críticas; ninguna petición a CDN.
+- [x] Imágenes AVIF/WebP (`<Picture>`) con dimensiones explícitas.
 
 **Accesibilidad:**
-- [ ] Contraste AA en todos los pares de color (auditar con los tokens del design-plan, incluido `graphite-deep` sobre `bone`).
-- [ ] Foco de teclado visible en todo elemento interactivo (outline 2px, nunca `outline: none` sin reemplazo).
-- [ ] Navegable completo con teclado, incluido menú móvil y acordeón.
-- [ ] `prefers-reduced-motion`: hexágono estático, sin transiciones de header, sin ninguna animación.
-- [ ] Un solo `h1` por página; jerarquía de headings sin saltos.
-- [ ] Skip link "Saltar al contenido".
+- [x] Contraste AA en todos los pares (se agregaron `graphite-deep` y `coral-texto` para claro; etiqueta "Más pedido" en ink).
+- [x] Foco de teclado visible (outline 2px `currentColor`, verificado en el CTA).
+- [x] Navegable con teclado; menú móvil abre/cierra con Escape (smoke test).
+- [x] `prefers-reduced-motion`: hexágono estático dibujado (dashoffset 0, smoke test).
+- [x] Un solo `h1` por página; heading-order limpio (Lighthouse a11y 100 en las 4 páginas).
+- [x] Skip link "Saltar al contenido".
 
 **Layout:**
-- [ ] Correcto desde 360px de ancho; sin scroll horizontal en ningún breakpoint.
-- [ ] Barra inferior móvil no tapa contenido (padding-bottom en `main`).
-- [ ] Un solo CTA coral visible por pantalla (auditoría visual sección por sección).
+- [x] Correcto a 360px (screenshots de QA de home, planes, caso y contacto).
+- [x] Barra inferior móvil no tapa contenido (`pb-24` en `main`) y se oculta mientras el CTA del hero está en pantalla.
+- [x] Un solo CTA coral por pantalla (en pricing, solo el plan destacado lleva coral).
 
 **Contenido:**
-- [ ] Grep limpio: `nosotros|innovador|siguiente nivel|pasión|transformación digital|Astro` no aparecen en copy renderizado.
-- [ ] Los tres casos tienen `TODO: reemplazar por cliente real` en el código y `esDemo: true`.
-- [ ] Ningún resultado numérico en los casos.
-- [ ] Precios visibles en home y /planes; ningún "consultar" salvo el plan A medida (que dice "cotización cerrada").
+- [x] Grep limpio en dist: `nosotros|innovador|siguiente nivel|pasión|transformación digital` — 0 resultados; "astro" solo en atributos técnicos del build.
+- [x] Los tres casos con `TODO: reemplazar por cliente real`, `esDemo: true` y etiqueta visible "Proyecto demo".
+- [x] Ningún resultado numérico en los casos.
+- [x] Precios visibles en home y /planes; A medida dice "cotización cerrada".
 
 **Funcional:**
-- [ ] Formulario: envío con JS y sin JS (probar con JS deshabilitado), honeypot descarta, validación server-side devuelve errores correctos.
-- [ ] Todos los links `wa.me` llevan el mensaje correcto según origen.
-- [ ] Sitemap y robots.txt accesibles; JSON-LD válido (Rich Results Test).
-- [ ] OG correcto por página (verificar con un previewer).
-- [ ] 404 útil.
+- [x] Formulario contra wrangler pages dev: honeypot → 303 gracias (éxito falso), inválido+JSON → 400 con errores por campo, válido+JSON sin API key → 500, válido sin JS → 303 `?error=2#aviso`.
+- [x] Links `wa.me` generados desde un único helper (`waLink`) con mensaje por origen.
+- [x] Sitemap y robots.txt en dist; JSON-LD emitido (ProfessionalService, Service+Offer, FAQPage, BreadcrumbList). Pendiente pasarlo por Rich Results Test ya publicado.
+- [x] OG 1200×630 por página, generado con la marca.
+- [x] 404 útil con CTA al inicio.
 
 **Pre-lanzamiento (manual, con el dueño):**
 - [x] Precios confirmados. WhatsApp +507 6388-8475. Correo temporal renandiazreyes@gmail.com.

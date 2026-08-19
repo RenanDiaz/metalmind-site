@@ -41,11 +41,13 @@ const colores = { ink: 'var(--color-ink)', bone: 'var(--color-bone)' } as const;
     }
   }
 
-  /* Región superior: el color de la sección de arriba, recortado por la arista */
+  /* Región superior: el color de la sección de arriba, recortado por la arista.
+     El -1px superior solapa la sección anterior para que el redondeo del
+     clip-path no deje un hairline del color de fondo. */
   .arista::before {
     content: '';
     position: absolute;
-    inset: 0;
+    inset: -1px 0 0 0;
     background-color: var(--color-de);
     clip-path: polygon(
       var(--x1) 0,

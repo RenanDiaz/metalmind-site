@@ -9,8 +9,11 @@ import { waLink, type OrigenWhatsApp } from '../lib/whatsapp';
  */
 interface Props {
   plan: CollectionEntry<'planes'>;
+  /** Nivel del heading del nombre: en home las tarjetas siguen a un h2; en /planes, al h1 */
+  nivelTitulo?: 'h2' | 'h3';
 }
-const { plan } = Astro.props;
+const { plan, nivelTitulo = 'h3' } = Astro.props;
+const Titulo = nivelTitulo;
 const { nombre, id, precioDesde, mantenimiento, paraQuien, incluye, entrega, destacado, ctaTexto } =
   plan.data;
 const origen: OrigenWhatsApp = `plan-${id}`;
@@ -25,8 +28,8 @@ const origen: OrigenWhatsApp = `plan-${id}`;
   {destacado && <span class="nodo-corte" aria-hidden="true" />}
 
   <div class="flex items-baseline justify-between gap-3">
-    <h3 class="display-3 text-ink">{nombre}</h3>
-    {destacado && <span class="eyebrow text-coral-deep">Más pedido</span>}
+    <Titulo class="display-3 text-ink">{nombre}</Titulo>
+    {destacado && <span class="eyebrow text-ink">Más pedido</span>}
   </div>
 
   <p class="mt-5">
