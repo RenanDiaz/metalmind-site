@@ -7,7 +7,10 @@
     "build": "astro build",
     "check": "astro check",
     "preview": "astro preview",
-    "og": "node scripts/og.mjs"
+    "og": "node scripts/og.mjs",
+    "cf:dev": "npm run build && wrangler dev",
+    "cf:check": "npm run build && wrangler deploy --dry-run",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -23,6 +26,7 @@
     "@astrojs/check": "^0.9.10",
     "@cloudflare/workers-types": "^5.20260819.1",
     "playwright-core": "^1.62.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.125.0"
   }
 }

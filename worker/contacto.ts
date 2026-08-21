@@ -5,18 +5,14 @@
  * (responde JSON, detectado por el header Accept). Honeypot y trampa de
  * tiempo responden como éxito para no avisarle al bot. Envío por Resend.
  *
- * Variables de entorno en Cloudflare Pages:
- * - RESEND_API_KEY (requerida)
+ * Variables de entorno en Cloudflare (Settings → Variables and Secrets):
+ * - RESEND_API_KEY (requerida, secreto)
  * - CONTACTO_TO   (opcional; por defecto el correo del dueño)
  * - CONTACTO_FROM (opcional; por defecto onboarding@resend.dev)
  *   TODO: verificar metalmindstudios.com en Resend y fijar CONTACTO_FROM
  */
 
-interface Env {
-  RESEND_API_KEY: string;
-  CONTACTO_TO?: string;
-  CONTACTO_FROM?: string;
-}
+import type { Env } from './index';
 
 // TODO: cambiar a hola@metalmindstudios.com cuando exista el dominio de correo
 const DESTINO_POR_DEFECTO = 'renandiazreyes@gmail.com';
@@ -62,7 +58,7 @@ function esBot(campos: Record<string, string>): boolean {
   return false;
 }
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export async function manejarContacto(request: Request, env: Env): Promise<Response> {
   const quiereJson = request.headers.get('accept')?.includes('application/json') ?? false;
 
   const responder = {
@@ -147,4 +143,4 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   return responder.exito();
-};
+}

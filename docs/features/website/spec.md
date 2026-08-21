@@ -373,7 +373,7 @@ export const collections = { trabajos, planes, faq };
 
 ---
 
-## 7. Pages Function — contrato de `functions/api/contacto.ts`
+## 7. Worker — contrato de `worker/contacto.ts`
 
 ### Request
 
@@ -418,7 +418,7 @@ Detección de cliente: si el request trae `Accept: application/json`
 | Validación | `400 {"ok":false,"errores":{campo:"mensaje"}}` | `303 → /contacto?error=1#formulario` (la página muestra aviso genérico) |
 | Error interno | `500 {"ok":false}` | `303 → /contacto?error=2#formulario` |
 
-### Variables de entorno (Cloudflare Pages)
+### Variables de entorno (Cloudflare Workers → Settings → Variables and Secrets)
 
 `RESEND_API_KEY` · `CONTACTO_TO` · `CONTACTO_FROM`
 
@@ -482,7 +482,8 @@ por campo. Si prefieres cero JS aquí, se elimina y queda solo el camino nativo.
   `decoding="async"` en todo salvo el hero (que es SVG inline, sin peso de imagen).
 - Analítica: snippet de Cloudflare Web Analytics (beacon, sin cookies). Es el único
   script de terceros; va con `defer`.
-- Deploy: Cloudflare Pages, build `astro build`, dominio `metalmindstudios.com`.
+- Deploy: Cloudflare Workers (Workers Builds + static assets, config en
+  `wrangler.jsonc`), build `astro build` → `dist/`, dominio `metalmindstudios.com`.
 
 ```
 src/
@@ -495,8 +496,9 @@ src/
   data/         site.ts home.ts
   styles/       global.css (tokens @theme + reset + utilidades propias)
   lib/          whatsapp.ts jsonld.ts
-functions/
-  api/contacto.ts
+worker/
+  index.ts (entry-point: /api/contacto + fallback a assets)
+  contacto.ts
 public/
   brand/ robots.txt og/
 ```
@@ -506,7 +508,9 @@ public/
 ## 10. Checklist de aceptación
 
 *Verificado el 2026-08-19 sobre el build local (Lighthouse CLI móvil + wrangler
-pages dev + smoke tests con Chromium). Lo no marcado requiere el sitio publicado.*
+pages dev + smoke tests con Chromium). Lo no marcado requiere el sitio publicado.
+Al migrar el deploy a Workers (2026-08-21) se repitió el smoke test del formulario
+contra `wrangler dev`, con los mismos cuatro resultados.*
 
 **Rendimiento y calidad (sin anunciarlo en el sitio):**
 - [x] Lighthouse ≥ 95 en las cuatro categorías, en móvil: `/` 100/100/100/100, `/planes` 100/100/100/100, caso 99/100/100/100, `/contacto` 100/100/100/100. CLS 0.
@@ -534,7 +538,7 @@ pages dev + smoke tests con Chromium). Lo no marcado requiere el sitio publicado
 - [x] Precios visibles en home y /planes; A medida dice "cotización cerrada".
 
 **Funcional:**
-- [x] Formulario contra wrangler pages dev: honeypot → 303 gracias (éxito falso), inválido+JSON → 400 con errores por campo, válido+JSON sin API key → 500, válido sin JS → 303 `?error=2#aviso`.
+- [x] Formulario contra `wrangler dev` (antes `wrangler pages dev`): honeypot → 303 gracias (éxito falso), inválido+JSON → 400 con errores por campo, válido+JSON sin API key → 500, válido sin JS → 303 `?error=2#aviso`.
 - [x] Links `wa.me` generados desde un único helper (`waLink`) con mensaje por origen.
 - [x] Sitemap y robots.txt en dist; JSON-LD emitido (ProfessionalService, Service+Offer, FAQPage, BreadcrumbList). Pendiente pasarlo por Rich Results Test ya publicado.
 - [x] OG 1200×630 por página, generado con la marca.

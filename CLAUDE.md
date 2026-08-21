@@ -12,11 +12,14 @@ una conversación de WhatsApp. Especificación completa en
   (tokens en `@theme` dentro de `src/styles/global.css`; **no hay** `tailwind.config.js`).
 - Contenido en Content Collections (`src/content/{trabajos,planes,faq}`) y datos
   tipados en `src/data/`. **Cero copy hardcodeado en componentes.**
-- Formulario → Cloudflare Pages Function (`functions/api/contacto.ts`) + Resend.
+- Formulario → Worker (`worker/contacto.ts`, montado en `POST /api/contacto`) + Resend.
 - Imágenes OG (`public/og/*.png`): se generan con `npm run og` (`scripts/og.mjs`,
   Chromium + las mismas fuentes y geometría del sitio). Si cambia el copy de un
   título o eyebrow, se actualizan ahí — no se editan a mano.
-- Deploy: Cloudflare Pages, dominio `metalmindstudios.com`.
+- Deploy: Cloudflare Workers con static assets (Workers Builds compila el repo y
+  lee `wrangler.jsonc`: `assets.directory = ./dist` y `run_worker_first` para
+  `/api/*`). Dominio `metalmindstudios.com`. `name` en `wrangler.jsonc` tiene que
+  coincidir con el nombre del Worker en el dashboard.
 - JS de cliente permitido (inventario cerrado): menú móvil, compactación del header,
   ocultar/mostrar barra móvil, mejora progresiva del formulario. Nada más; cualquier
   isla nueva se justifica antes.
@@ -98,13 +101,13 @@ scroll, sin parallax.
 ## Pendientes conocidos (TODOs en código)
 
 - Comprar dominio → cambiar `correo` en `src/data/site.ts`, `CONTACTO_FROM`
-  (Resend con dominio verificado) en `functions/api/contacto.ts`, y **eliminar
+  (Resend con dominio verificado) en `worker/contacto.ts`, y **eliminar
   `PUBLIC_SITE_URL` del build**. Mientras tanto esa variable debe definirse en
   Cloudflare con la URL real del deploy (workers.dev) para que `og:image`,
   canonical y sitemap apunten a un dominio vivo — sin ella, WhatsApp no puede
   descargar la imagen de la vista previa.
 - Re-exportar lockups SVG con texto en curvas (hoy el header usa `Lockup.astro` en HTML).
-- Configurar `PUBLIC_CF_BEACON_TOKEN` (Cloudflare Web Analytics) en Pages.
+- Configurar `PUBLIC_CF_BEACON_TOKEN` (Cloudflare Web Analytics) en el Worker.
 - Reemplazar los tres casos demo por clientes reales. Los tres demos están
   ubicados en Panamá (y así salen en las capturas de `src/assets/trabajos/`);
   al reemplazarlos, que el portafolio cubra más de un país para que el
