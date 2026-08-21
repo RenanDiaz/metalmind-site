@@ -1,6 +1,6 @@
 ---
 pregunta: ¿Y si quiero cambios después de publicar?
-orden: 4
+orden: 5
 ---
 
 Los cambios menores — precios, horarios, fotos, un texto — entran en el

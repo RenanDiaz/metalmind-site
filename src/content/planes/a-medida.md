@@ -3,10 +3,10 @@ nombre: A medida
 id: a-medida
 precioDesde: null
 mantenimiento: null
-paraQuien: 'Para cuando necesitas que el sitio haga algo: reservas, pagos con Yappy, portales de clientes, integraciones.'
+paraQuien: 'Para cuando necesitas que el sitio haga algo: reservas, pagos en línea, portales de clientes, integraciones.'
 incluye:
   - Reservas y citas en línea
-  - Pagos con Yappy
+  - Pagos en línea (Yappy, tarjeta, PayPal)
   - Portales de clientes
   - Integraciones con lo que ya usas
 entrega: Según alcance, con fechas por escrito

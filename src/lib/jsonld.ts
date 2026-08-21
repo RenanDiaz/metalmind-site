@@ -1,4 +1,13 @@
-import { SITE } from '../data/site';
+import { SITE, instagramUrl } from '../data/site';
+
+/**
+ * A quién le sirvo. El domicilio del negocio es Panamá (ver `address`), pero el
+ * trabajo es remoto: el área servida no se acota al país.
+ */
+const AREA_SERVIDA = [
+  { '@type': 'Country', name: 'Panamá' },
+  { '@type': 'Place', name: 'Latinoamérica' },
+];
 
 /** JSON-LD del negocio (home). ProfessionalService es subtipo de LocalBusiness. */
 export function negocioJsonLd() {
@@ -15,12 +24,10 @@ export function negocioJsonLd() {
     priceRange: 'Desde $450',
     address: {
       '@type': 'PostalAddress',
-      addressCountry: 'PA',
+      addressCountry: SITE.paisISO,
     },
-    areaServed: {
-      '@type': 'Country',
-      name: 'Panamá',
-    },
+    areaServed: AREA_SERVIDA,
+    sameAs: [instagramUrl],
   };
 }
 
@@ -35,7 +42,7 @@ export function serviciosJsonLd(
       name: `Sitio web — Plan ${plan.nombre}`,
       description: plan.paraQuien,
       provider: { '@id': `${SITE.url}/#negocio` },
-      areaServed: { '@type': 'Country', name: 'Panamá' },
+      areaServed: AREA_SERVIDA,
       ...(plan.precioDesde !== null && {
         offers: {
           '@type': 'Offer',

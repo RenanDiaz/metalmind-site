@@ -1,6 +1,6 @@
 ---
 pregunta: ¿Quién escribe los textos?
-orden: 2
+orden: 3
 ---
 
 Los trabajamos juntos: tú me cuentas del negocio, yo redacto y tú apruebas.

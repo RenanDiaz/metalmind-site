@@ -1,8 +1,10 @@
 # MetalMind Studios — sitio web
 
-Sitio de venta de un estudio de desarrollo web unipersonal en Panamá. El trabajo
-de la página: convertir una visita en una conversación de WhatsApp. Especificación
-completa en `docs/features/website/spec.md` y `docs/features/website/design-plan.md`.
+Sitio de venta de un estudio de desarrollo web unipersonal. Estoy en Panamá y
+trabajo remoto con negocios de cualquier país de habla hispana: Panamá es de
+dónde soy, no a quién le vendo. El trabajo de la página: convertir una visita en
+una conversación de WhatsApp. Especificación completa en
+`docs/features/website/spec.md` y `docs/features/website/design-plan.md`.
 
 ## Stack
 
@@ -11,6 +13,9 @@ completa en `docs/features/website/spec.md` y `docs/features/website/design-plan
 - Contenido en Content Collections (`src/content/{trabajos,planes,faq}`) y datos
   tipados en `src/data/`. **Cero copy hardcodeado en componentes.**
 - Formulario → Cloudflare Pages Function (`functions/api/contacto.ts`) + Resend.
+- Imágenes OG (`public/og/*.png`): se generan con `npm run og` (`scripts/og.mjs`,
+  Chromium + las mismas fuentes y geometría del sitio). Si cambia el copy de un
+  título o eyebrow, se actualizan ahí — no se editan a mano.
 - Deploy: Cloudflare Pages, dominio `metalmindstudios.com`.
 - JS de cliente permitido (inventario cerrado): menú móvil, compactación del header,
   ocultar/mostrar barra móvil, mejora progresiva del formulario. Nada más; cualquier
@@ -70,6 +75,10 @@ tipográficas). Radios de esquina: 0 o 4px (`rounded-sm`), nada más.
 - Sin chatbot, popup de newsletter ni "🔥 3 personas viendo esto".
 - Sin badges de tecnologías. **La palabra "Astro" no aparece en el sitio renderizado.**
 - **Nunca "nosotros": primera persona del singular.** Es una persona y es parte del ángulo.
+- **Nada de acotar el público por nacionalidad.** El público se define por el tipo
+  de negocio ("negocios que ya funcionan"), nunca por país. Panamá solo aparece
+  como origen ("Desde Panamá") y como domicilio en el JSON-LD; lo local
+  (Yappy, ACH) siempre va con su alternativa para quien está afuera.
 - Los casos demo no llevan resultados numéricos inventados; están marcados
   `esDemo: true`, con etiqueta visible "Proyecto demo" y `TODO: reemplazar por
   cliente real`.
@@ -94,7 +103,9 @@ scroll, sin parallax.
   Cloudflare con la URL real del deploy (workers.dev) para que `og:image`,
   canonical y sitemap apunten a un dominio vivo — sin ella, WhatsApp no puede
   descargar la imagen de la vista previa.
-- Confirmar handle de Instagram → activar link en `Footer.astro`.
 - Re-exportar lockups SVG con texto en curvas (hoy el header usa `Lockup.astro` en HTML).
 - Configurar `PUBLIC_CF_BEACON_TOKEN` (Cloudflare Web Analytics) en Pages.
-- Reemplazar los tres casos demo por clientes reales.
+- Reemplazar los tres casos demo por clientes reales. Los tres demos están
+  ubicados en Panamá (y así salen en las capturas de `src/assets/trabajos/`);
+  al reemplazarlos, que el portafolio cubra más de un país para que el
+  posicionamiento se sostenga también en los ejemplos.

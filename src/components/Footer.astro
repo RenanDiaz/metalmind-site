@@ -1,13 +1,13 @@
 ---
 import Lockup from './Lockup.astro';
-import { SITE } from '../data/site';
+import { SITE, instagramUrl } from '../data/site';
 import { waLink } from '../lib/whatsapp';
 
 const anio = new Date().getFullYear();
 ---
 
 <footer class="border-t border-line-dark bg-ink">
-  <div class="container-site flex flex-col gap-8 py-12 md:flex-row md:items-start md:justify-between">
+  <div class="container-site flex flex-col gap-8 pt-12 pb-32 md:flex-row md:items-start md:justify-between md:pb-12">
     <div class="flex flex-col gap-4">
       <a href="/" aria-label="MetalMind Studios — inicio" class="w-fit text-bone">
         <Lockup tamano={30} />
@@ -24,13 +24,14 @@ const anio = new Date().getFullYear();
       <a href={`mailto:${SITE.correo}`} class="link-coral w-fit text-steel hover:text-bone">
         {SITE.correo}
       </a>
-      {
-        /* TODO: activar cuando se confirme el handle de Instagram
-        <a href={`https://instagram.com/${SITE.instagram}`} class="link-coral w-fit text-steel hover:text-bone">
-          Instagram
-        </a> */
-      }
-      <p class="mt-2 text-sm text-graphite">{SITE.ubicacion} · {anio}</p>
+      <a
+        href={instagramUrl}
+        rel="me noopener"
+        class="link-coral w-fit text-steel hover:text-bone"
+      >
+        Instagram @{SITE.instagram}
+      </a>
+      <p class="mt-2 text-sm text-graphite">{SITE.origen} · {anio}</p>
     </div>
   </div>
 </footer>

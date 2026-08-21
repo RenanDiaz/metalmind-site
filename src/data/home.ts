@@ -4,10 +4,10 @@
  */
 
 export const HERO = {
-  eyebrow: 'Desarrollo web · Panamá',
+  eyebrow: 'Desarrollo web · Desde Panamá',
   titulo: ['Tu negocio existe.', 'Tu sitio web, no.'],
   subtitulo:
-    'Hago sitios web rápidos y bien hechos para negocios panameños. Diseño, desarrollo y mantenimiento — una sola persona que te contesta el WhatsApp.',
+    'Hago sitios web rápidos y bien hechos para negocios que ya funcionan. Diseño, desarrollo y mantenimiento — una sola persona que te contesta el WhatsApp, estés donde estés.',
   ctaPrimario: 'Cotizar por WhatsApp',
   ctaSecundario: 'Ver trabajos',
 } as const;
@@ -73,7 +73,8 @@ export const PROCESO = {
   pasos: [
     {
       nombre: 'Conversamos',
-      texto: 'Me cuentas de tu negocio por WhatsApp o en una llamada. Treinta minutos, sin costo y sin compromiso.',
+      texto:
+        'Me cuentas de tu negocio por WhatsApp o en una videollamada. Treinta minutos, sin costo y sin compromiso — no hace falta que estemos en la misma ciudad.',
       tiempo: 'Día 1',
     },
     {
