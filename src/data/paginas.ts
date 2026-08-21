@@ -7,7 +7,7 @@ export const PAGINA_TRABAJOS = {
   cta: 'Cotizar por WhatsApp',
   metaTitle: 'Trabajos — MetalMind Studios',
   metaDescription:
-    'Casos de sitios web para negocios locales: el problema que tenían y qué cambió con la página nueva.',
+    'Tres casos de sitios web: el problema que tenía cada negocio y qué cambió con la página nueva.',
 } as const;
 
 export const PAGINA_PLANES = {
@@ -40,7 +40,8 @@ export const PAGINA_PLANES = {
 
 export const PAGINA_CONTACTO = {
   titulo: 'Hablemos de tu negocio.',
-  intro: 'Por WhatsApp es más rápido. Si prefieres el formulario, respondo el mismo día hábil.',
+  intro:
+    'Por WhatsApp es más rápido. Si prefieres el formulario, respondo el mismo día hábil. Trabajo remoto: no importa en qué ciudad o país estés.',
   whatsappCta: 'Cotizar por WhatsApp',
   form: {
     titulo: 'O escríbeme por aquí',
@@ -64,7 +65,7 @@ export const PAGINA_CONTACTO = {
   },
   metaTitle: 'Contacto — MetalMind Studios',
   metaDescription:
-    'Cotiza tu sitio web por WhatsApp o formulario. Respondo el mismo día hábil. Yappy, ACH o efectivo.',
+    'Cotiza tu sitio web por WhatsApp o formulario. Respondo el mismo día hábil. Trabajo remoto, con negocios de cualquier país.',
 } as const;
 
 export const PAGINA_GRACIAS = {

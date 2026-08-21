@@ -21,8 +21,8 @@
    `metalmind-favicon.svg`.
 4. **Contacto:** WhatsApp `+507 6388-8475` (`wa.me/50763888475`). Correo temporal
    `renandiazreyes@gmail.com` hasta comprar el dominio
-   (`TODO: cambiar a hola@metalmindstudios.com`). Instagram: sin handle confirmado —
-   no se publica link hasta tenerlo (`TODO` en footer).
+   (`TODO: cambiar a hola@metalmindstudios.com`). Instagram: `@metalmind.studios`,
+   con link activo en el footer.
 5. **Precios:** confirmados tal como están en §3.4.
 6. **Etiqueta "demo" visible:** aprobada — cada caso lleva "Proyecto demo" visible
    además del `TODO` en código.
@@ -66,10 +66,11 @@ footer y en el registro de primera persona de todo el copy.
 - `padding-bottom: env(safe-area-inset-bottom)`.
 
 ### Footer (todas las páginas)
-- Fondo `ink`. Lockup, y en una línea: WhatsApp (link) y `renandiazreyes@gmail.com`
-  (`TODO: cambiar a hola@metalmindstudios.com` al comprar dominio). Instagram queda
-  como `TODO` comentado hasta confirmar el handle.
-- Línea legal-humana: "MetalMind Studios · Panamá · 2026" (año en build).
+- Fondo `ink`. Lockup, y en una línea: WhatsApp (link), `renandiazreyes@gmail.com`
+  (`TODO: cambiar a hola@metalmindstudios.com` al comprar dominio) e
+  `Instagram @metalmind.studios`.
+- Línea legal-humana: "Desde Panamá · 2026" (año en build). Dice de dónde soy, no
+  a quién le vendo.
 - Micro-línea de identidad: "Diseñado y construido por una persona. Esa persona te
   contesta el WhatsApp."
 
@@ -96,10 +97,11 @@ Centralizado en `src/lib/whatsapp.ts` — un helper `waLink(origen)`:
 
 ### 3.1 Hero (fondo `ink`)
 
-- Eyebrow (mono): `DESARROLLO WEB · PANAMÁ`
+- Eyebrow (mono): `DESARROLLO WEB · DESDE PANAMÁ`
 - H1: **Tu negocio existe. Tu sitio web, no.**
-- Subtítulo: "Hago sitios web rápidos y bien hechos para negocios panameños.
-  Diseño, desarrollo y mantenimiento — una sola persona que te contesta el WhatsApp."
+- Subtítulo: "Hago sitios web rápidos y bien hechos para negocios que ya funcionan.
+  Diseño, desarrollo y mantenimiento — una sola persona que te contesta el WhatsApp,
+  estés donde estés."
 - CTA primario (coral): **Cotizar por WhatsApp** (origen `hero`)
 - CTA secundario (link con subrayado): **Ver trabajos** → `/trabajos`
 - Visual: hexágono SVG inline, trazo 1.5px `steel`, aristas internas `graphite`,
@@ -433,23 +435,29 @@ por campo. Si prefieres cero JS aquí, se elimina y queda solo el camino nativo.
 
 ## 8. SEO
 
-- `lang="es-PA"` en `<html>`. Canonical absoluto por página.
+- `lang="es"` en `<html>` (español neutro: el público no se acota a un país).
+  Canonical absoluto por página.
 - Title pattern: `{Página} — MetalMind Studios` (home:
-  `MetalMind Studios — Sitios web para negocios en Panamá`).
+  `MetalMind Studios — Sitios web para negocios que ya funcionan`).
 - Meta descripciones escritas a mano:
-  - **Home:** "Sitios web rápidos y bien hechos para negocios panameños. Precios
-    visibles, entrega en 2 semanas y una persona real que te contesta el WhatsApp."
-  - **/trabajos:** "Casos de sitios web para negocios locales: el problema que
-    tenían y qué cambió con la página nueva."
+  - **Home:** "Sitios web rápidos y bien hechos para negocios que ya funcionan.
+    Precios visibles, entrega en 2 semanas y una persona real que te contesta el
+    WhatsApp."
+  - **/trabajos:** "Tres casos de sitios web: el problema que tenía cada negocio y
+    qué cambió con la página nueva."
   - **/planes:** "Planes desde $450 con mantenimiento mensual que incluye hosting,
     dominio y cambios. Precios claros, sin 'consultar'."
   - **/contacto:** "Cotiza tu sitio web por WhatsApp o formulario. Respondo el mismo
-    día hábil. Yappy, ACH o efectivo."
+    día hábil. Trabajo remoto, con negocios de cualquier país."
   - Cada `/trabajos/[slug]`: descripción manual en el frontmatter del caso.
-- OG: imagen social 1200×630 por página (5 estáticas, diseñadas con la marca:
-  fondo `ink`, hexágono, título de página en Archivo). `og:locale = es_PA`.
+- OG: imagen social 1200×630 por página (estáticas, diseñadas con la marca:
+  fondo `ink`, hexágono `tenue`, título de página en Archivo). Se generan con
+  `npm run og` (`scripts/og.mjs`), que es la fuente del copy de cada tarjeta.
+  `og:locale = es_LA`.
 - JSON-LD: `ProfessionalService` (subtipo de LocalBusiness) en home — nombre,
-  área servida (Panamá), teléfono +507 6388-8475, URL; `Service` + `Offer` por plan en
+  domicilio en `PA`, área servida (Panamá + Latinoamérica, porque el trabajo es
+  remoto), `sameAs` al Instagram, teléfono +507 6388-8475, URL;
+  `Service` + `Offer` por plan en
   `/planes`; `BreadcrumbList` en casos; `FAQPage` en `/planes` (donde vive el FAQ
   canónico para no duplicar el markup en home).
 - `@astrojs/sitemap` + `robots.txt` estático apuntando al sitemap.
@@ -538,4 +546,4 @@ pages dev + smoke tests con Chromium). Lo no marcado requiere el sitio publicado
 - [ ] Email de prueba del formulario recibido (RESEND_API_KEY configurada en Pages).
 - [x] Coral #F04E68 aplicado en tokens y SVGs.
 - [ ] Lockups re-exportados con texto en curvas.
-- [ ] Confirmar handle de Instagram y activar el link del footer.
+- [x] Handle de Instagram confirmado (`@metalmind.studios`) y link activo en el footer.

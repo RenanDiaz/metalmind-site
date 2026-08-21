@@ -1,6 +1,6 @@
 ---
 pregunta: ¿Quién pone las fotos?
-orden: 3
+orden: 4
 ---
 
 Las tuyas, primero: fotos reales venden más que las perfectas. Si no tienes,

@@ -122,7 +122,8 @@ son `→` tipográficas, horizontales.
 ┌──────────────────────────────┐
 │ [lockup]                  ≡  │ header sticky, ink
 ├──────────────────────────────┤
-│ DESARROLLO WEB · PANAMÁ      │ eyebrow mono
+│ DESARROLLO WEB ·             │ eyebrow mono
+│ DESDE PANAMÁ                 │
 │                              │
 │ Tu negocio                   │ display-1, bone
 │ existe.                      │
@@ -130,7 +131,7 @@ son `→` tipográficas, horizontales.
 │                              │
 │ Hago sitios web rápidos y    │ body-lg, steel
 │ bien hechos para negocios    │
-│ panameños...                 │
+│ que ya funcionan...          │
 │                              │
 │ ┌──────────────────────────┐ │
 │ │  Cotizar por WhatsApp    │ │ CTA coral (único)
@@ -221,7 +222,7 @@ son `→` tipográficas, horizontales.
 ├──────────────────────────────┤
 │ [lockup]  WhatsApp · correo  │ footer
 │ · Instagram                  │
-│ Panamá · 2026                │
+│ Desde Panamá · 2026          │
 ├══════════════════════════════┤
 │ ▐ Cotizar por WhatsApp ▌     │ barra fija inferior, coral
 └──────────────────────────────┘
@@ -233,13 +234,13 @@ son `→` tipográficas, horizontales.
 ┌────────────────────────────────────────────────────────────────────┐
 │ [lockup]              Trabajos   Planes   Contacto      [Cotizar]  │ sticky
 ├────────────────────────────────────────────────────────────────────┤
-│ DESARROLLO WEB · PANAMÁ                                            │
+│ DESARROLLO WEB · DESDE PANAMÁ                                      │
 │                                                                    │
 │ Tu negocio existe.                              ⬡                  │
 │ Tu sitio web, no.                            (hexágono 1.5px       │
 │                                               se dibuja, nodo      │
 │ Hago sitios web rápidos y bien                coral al final)      │
-│ hechos para negocios panameños...                                  │
+│ hechos para negocios que ya funcionan...                           │
 │                                                                    │
 │ [ Cotizar por WhatsApp ]   Ver trabajos                            │
 ├────────────────────────────────────────────────────────────────────┤
@@ -289,7 +290,7 @@ son `→` tipográficas, horizontales.
 │            Cotizar toma cinco minutos y no te compromete a nada.   │
 │                    [ Cotizar por WhatsApp ]                        │
 ├────────────────────────────────────────────────────────────────────┤
-│ [lockup]        wa · correo · instagram          Panamá · 2026     │
+│ [lockup]        wa · correo · instagram     Desde Panamá · 2026    │
 └────────────────────────────────────────────────────────────────────┘
 ```
 
