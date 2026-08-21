@@ -1,0 +1,23 @@
+{
+  // Config del deploy en Cloudflare Workers (Workers Builds la lee del repo, así
+  // que los comandos del dashboard pueden quedar en `npx wrangler deploy` y
+  // `npx wrangler versions upload` sin argumentos).
+  //
+  // `name` debe coincidir con el nombre del Worker en el dashboard; si no,
+  // el build publica un Worker distinto.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "metalmind-site",
+  "compatibility_date": "2026-08-20",
+  "main": "worker/index.ts",
+  "assets": {
+    // Salida de `astro build`. Los assets se sirven primero; el Worker solo
+    // corre en /api/* y en lo que no calce con un archivo del build.
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": {
+    "enabled": true
+  }
+}
