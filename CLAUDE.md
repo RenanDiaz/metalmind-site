@@ -82,9 +82,10 @@ tipográficas). Radios de esquina: 0 o 4px (`rounded-sm`), nada más.
   de negocio ("negocios que ya funcionan"), nunca por país. Panamá solo aparece
   como origen ("Desde Panamá") y como domicilio en el JSON-LD; lo local
   (Yappy, ACH) siempre va con su alternativa para quien está afuera.
-- Los casos demo no llevan resultados numéricos inventados; están marcados
-  `esDemo: true`, con etiqueta visible "Proyecto demo" y `TODO: reemplazar por
-  cliente real`.
+- Los trabajos llevan `tipo`: `cliente` (sin etiqueta), `propio` (etiqueta
+  visible "Proyecto propio") o `demo` (etiqueta "Proyecto demo" + `TODO` en el
+  .md). Nunca se presenta un proyecto propio como si fuera de cliente, y ningún
+  caso lleva resultados numéricos que no se puedan sostener.
 
 ## Piso de calidad (sin anunciarlo en el sitio)
 
@@ -108,7 +109,10 @@ scroll, sin parallax.
   descargar la imagen de la vista previa.
 - Re-exportar lockups SVG con texto en curvas (hoy el header usa `Lockup.astro` en HTML).
 - Configurar `PUBLIC_CF_BEACON_TOKEN` (Cloudflare Web Analytics) en el Worker.
-- Reemplazar los tres casos demo por clientes reales. Los tres demos están
-  ubicados en Panamá (y así salen en las capturas de `src/assets/trabajos/`);
-  al reemplazarlos, que el portafolio cubra más de un país para que el
-  posicionamiento se sostenga también en los ejemplos.
+- Portafolio: hoy hay un caso de cliente (Obsidian Finds) y dos propios (Still
+  Louder, Bandmate), los tres desde Chiriquí. Al sumar clientes, priorizar
+  negocios de servicio y de otros países para que el posicionamiento se
+  sostenga también en los ejemplos. Obsidian Finds tiene pendiente `plan` y
+  `entrega`.
+- Capturas de `src/assets/trabajos/`: 1600×1200 JPEG, del sitio en vivo con
+  Chromium (viewport 1200×900 a 2x, reduced-motion).

@@ -6,7 +6,7 @@ import MarcoNavegador from '../../components/MarcoNavegador.astro';
 import SeparadorArista from '../../components/SeparadorArista.astro';
 import { waLink } from '../../lib/whatsapp';
 import { migasJsonLd } from '../../lib/jsonld';
-import { PAGINA_TRABAJOS } from '../../data/paginas';
+import { ETIQUETA_TIPO, PAGINA_TRABAJOS } from '../../data/paginas';
 
 export async function getStaticPaths() {
   const trabajos = (await getCollection('trabajos', ({ data }) => data.publicado)).sort(
@@ -23,8 +23,9 @@ export async function getStaticPaths() {
 }
 
 const { trabajo, anterior, siguiente } = Astro.props;
-const { nombre, sector, ubicacion, plan, entrega, captura, capturaAlt, descripcion, esDemo } =
+const { nombre, sector, ubicacion, plan, entrega, captura, capturaAlt, descripcion, tipo, sitio } =
   trabajo.data;
+const etiqueta = ETIQUETA_TIPO[tipo];
 const { Content } = await render(trabajo);
 
 const NOMBRE_PLAN = { base: 'Base', negocio: 'Negocio', 'a-medida': 'A medida' } as const;
@@ -52,7 +53,7 @@ const NOMBRE_PLAN = { base: 'Base', negocio: 'Negocio', 'a-medida': 'A medida' }
       <p class="eyebrow text-graphite">{sector} · {ubicacion}</p>
       <div class="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-2">
         <h1 class="display-1 text-bone">{nombre}</h1>
-        {esDemo && <span class="eyebrow text-graphite">Proyecto demo</span>}
+        {etiqueta && <span class="eyebrow text-graphite">{etiqueta}</span>}
       </div>
     </div>
   </section>
@@ -79,14 +80,34 @@ const NOMBRE_PLAN = { base: 'Base', negocio: 'Negocio', 'a-medida': 'A medida' }
       </div>
 
       <dl class="mx-auto mt-12 flex max-w-[68ch] flex-wrap gap-x-12 gap-y-4 border-t border-line-light pt-6">
-        <div>
-          <dt class="eyebrow text-graphite-deep">Plan</dt>
-          <dd class="mt-2 font-medium text-ink">{NOMBRE_PLAN[plan]}</dd>
-        </div>
-        <div>
-          <dt class="eyebrow text-graphite-deep">Entrega</dt>
-          <dd class="mt-2 font-medium text-ink">{entrega}</dd>
-        </div>
+        {
+          plan && (
+            <div>
+              <dt class="eyebrow text-graphite-deep">{PAGINA_TRABAJOS.fichaPlan}</dt>
+              <dd class="mt-2 font-medium text-ink">{NOMBRE_PLAN[plan]}</dd>
+            </div>
+          )
+        }
+        {
+          entrega && (
+            <div>
+              <dt class="eyebrow text-graphite-deep">{PAGINA_TRABAJOS.fichaEntrega}</dt>
+              <dd class="mt-2 font-medium text-ink">{entrega}</dd>
+            </div>
+          )
+        }
+        {
+          sitio && (
+            <div>
+              <dt class="eyebrow text-graphite-deep">{PAGINA_TRABAJOS.fichaSitio}</dt>
+              <dd class="mt-2 font-medium">
+                <a href={sitio} class="link-coral text-ink">
+                  {PAGINA_TRABAJOS.verSitio} →
+                </a>
+              </dd>
+            </div>
+          )
+        }
       </dl>
     </div>
   </section>

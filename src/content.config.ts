@@ -10,12 +10,16 @@ const trabajos = defineCollection({
       ubicacion: z.string(),
       problema: z.string().max(140),
       resultado: z.string().max(140),
-      plan: z.enum(['base', 'negocio', 'a-medida']),
-      entrega: z.string(),
+      // Solo los trabajos de cliente pasaron por un plan; los propios no se cotizaron.
+      plan: z.enum(['base', 'negocio', 'a-medida']).optional(),
+      entrega: z.string().optional(),
       captura: image(),
       capturaAlt: z.string(),
       descripcion: z.string().max(160),
-      esDemo: z.boolean().default(true),
+      // cliente = sitio hecho para otra persona · propio = producto mío en producción
+      // · demo = negocio ficticio (lleva etiqueta visible y TODO en el .md)
+      tipo: z.enum(['cliente', 'propio', 'demo']),
+      sitio: z.string().url().optional(),
       orden: z.number().int(),
       publicado: z.boolean().default(true),
     }),
