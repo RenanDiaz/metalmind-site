@@ -24,8 +24,9 @@
    (`TODO: cambiar a hola@metalmindstudios.com`). Instagram: `@metalmind.studios`,
    con link activo en el footer.
 5. **Precios:** confirmados tal como están en §3.4.
-6. **Etiqueta "demo" visible:** aprobada — cada caso lleva "Proyecto demo" visible
-   además del `TODO` en código.
+6. **Etiqueta de tipo visible:** los casos demo llevan "Proyecto demo" y los
+   proyectos propios "Proyecto propio"; los de cliente no llevan etiqueta. Los
+   tres demos originales se retiraron al publicar trabajos reales.
 7. **Titular del hero:** se mantiene "Tu negocio existe. Tu sitio web, no."
 
 ---
@@ -34,7 +35,7 @@
 
 ```
 /                    Home — todo el argumento de venta
-/trabajos            Índice de casos (3 demos)
+/trabajos            Índice de casos (1 cliente + 2 propios)
 /trabajos/[slug]     Caso individual
 /planes              Precios en detalle + mantenimiento + FAQ
 /contacto            Formulario + WhatsApp directo
@@ -202,51 +203,17 @@ cómo."
 - H2: **Casos**
 - Tres tarjetas: captura en marco de navegador mínimo (barra 1px + tres puntos en
   `steel`), nombre, problema en una línea, resultado en una línea, link al caso.
-- Cada caso lleva etiqueta visible "Proyecto demo" y
-  `TODO: reemplazar por cliente real` en el código.
+- Etiqueta visible según `tipo`: "Proyecto propio" o "Proyecto demo"; los de
+  cliente no llevan etiqueta.
 - Link final: "Ver los tres casos →" `/trabajos`
 
-Casos (ficticios, sin métricas inventadas — detalle completo en §5):
+Casos actuales (sin métricas inventadas — detalle en los `.md` de la collection):
 
-| Slug | Negocio | Problema (una línea) | Resultado (una línea) |
-|---|---|---|---|
-| `clinica-dental-altamira` | Clínica Dental Altamira | "Las citas entraban por DM de Instagram y se perdían entre los mensajes." | "Ahora cada cita llega por WhatsApp con nombre, motivo y horario preferido." |
-| `fonda-dona-mirna` | Fonda Doña Mirna | "El menú vivía en fotos de Facebook que nadie actualizaba." | "Menú al día, horarios y cómo llegar — en un link que cabe en la bio." |
-| `taller-herrera` | Taller Herrera | "Veinte años de clientes fieles, pero invisible para cualquiera que buscara 'taller cerca de mí'." | "Aparece en Google con sus servicios y las cotizaciones llegan por WhatsApp." |
-
-### 3.7 FAQ (fondo `bone`)
-
-- Eyebrow: `PREGUNTAS`
-- H2: **Lo que todos preguntan**
-- Acordeón nativo `<details>/<summary>`, sin JS. Seis preguntas:
-
-1. **¿Cuánto tarda?** — "Una landing, dos semanas desde el anticipo. Un sitio del
-   plan Negocio, tres. Si los textos y fotos que te toca aportar llegan a tiempo,
-   la fecha se cumple: el cronograma va por escrito en la propuesta."
-2. **¿Quién escribe los textos?** — "Los trabajamos juntos: tú me cuentas del negocio,
-   yo redacto y tú apruebas. No necesitas llegar con nada escrito."
-3. **¿Quién pone las fotos?** — "Las tuyas, primero: fotos reales venden más que las
-   perfectas. Si no tienes, te digo exactamente cuáles hacen falta y cómo tomarlas
-   con el celular. No uso fotos de stock."
-4. **¿Y si quiero cambios después de publicar?** — "Los cambios menores — precios,
-   horarios, fotos, un texto — entran en el mantenimiento mensual. Algo más grande
-   (una sección nueva, una función nueva) te lo cotizo aparte, con precio antes de
-   tocar nada."
-5. **¿El precio incluye dominio y hosting?** — "El proyecto incluye el dominio el
-   primer año. De ahí en adelante, dominio y hosting van dentro de la mensualidad
-   de mantenimiento."
-6. **¿Cómo se paga?** — "Yappy, ACH o efectivo. 50% para arrancar y 50% cuando el
-   sitio está publicado y aprobado por ti."
-
-### 3.8 Cierre (fondo `ink`, hexágono grande y tenue de fondo)
-
-- H2: **Cuéntame de tu negocio.**
-- Línea: "Cotizar toma cinco minutos y no te compromete a nada."
-- CTA (coral, único en pantalla): **Cotizar por WhatsApp** (origen `cierre`)
-
----
-
-## 4. Páginas interiores
+| Slug | Tipo | Qué es |
+|---|---|---|
+| `obsidian-finds` | cliente | Tienda de moda alternativa (David, Chiriquí) — sitio de marca que lleva al catálogo en Cuanto |
+| `still-louder` | propio | Mi banda — sitio bilingüe + sistema propio de venta de entradas |
+| `bandmate` | propio | App web para bandas independientes (en inglés) |
 
 ### /trabajos
 - H1: **Trabajos** · intro de una línea: "Tres casos. En cada uno: cuál era el
@@ -257,17 +224,17 @@ Casos (ficticios, sin métricas inventadas — detalle completo en §5):
 ### /trabajos/[slug]
 Estructura por caso (campos en la collection, §6):
 1. Eyebrow con sector y ubicación (`CLÍNICA DENTAL · BELLA VISTA, PANAMÁ`)
-2. H1 = nombre del negocio · etiqueta "Proyecto demo"
+2. H1 = nombre del negocio · etiqueta según `tipo` (ninguna si es cliente)
 3. Captura grande en marco de navegador
 4. **El problema** — 2–3 frases
 5. **Qué hice** — viñetas de entregables (en lenguaje de cliente, sin tecnologías)
 6. **El resultado** — 2–3 frases cualitativas; prohibido inventar números
-7. Ficha: plan usado · tiempo de entrega
+7. Ficha: plan usado · tiempo de entrega · link al sitio en vivo (cada campo
+   solo si existe; los proyectos propios no tienen plan)
 8. CTA: "¿Tu negocio necesita algo así?" → WhatsApp (origen `trabajos`)
 9. Navegación anterior/siguiente caso
 
-Copy completo de los tres casos se redacta en los archivos de contenido siguiendo
-las líneas de la tabla en §3.6; cada archivo abre con
+Copy completo de cada caso en su archivo de contenido. Un caso `demo` abre con
 `# TODO: reemplazar por cliente real`.
 
 ### /planes
@@ -298,10 +265,8 @@ las líneas de la tabla en §3.6; cada archivo abre con
 - Prohibido: "soluciones innovadoras", "siguiente nivel", "pasión", "transformación
   digital", contadores animados, badges de tecnologías, fotos de stock, iconos de
   cohete/bombilla/engranaje, chatbots, popups.
-- Ningún resultado numérico inventado en los casos demo.
-- Capturas de los demos: se generan de los propios sitios demo construidos como
-  parte del proyecto (páginas estáticas simples) o mockups en HTML renderizados y
-  capturados — nunca fotos de stock. `TODO` en código en los tres.
+- Ningún resultado numérico que no se pueda sostener, en ningún caso.
+- Capturas: del sitio en vivo con Chromium (1600×1200 JPEG) — nunca fotos de stock.
 
 ---
 
@@ -331,11 +296,12 @@ const trabajos = defineCollection({
       ubicacion: z.string(),                 // "Bella Vista, Panamá"
       problema: z.string().max(140),         // una línea, para la tarjeta
       resultado: z.string().max(140),        // una línea, para la tarjeta
-      plan: z.enum(['base', 'negocio', 'a-medida']),
-      entrega: z.string(),                   // "2 semanas"
+      plan: z.enum(['base', 'negocio', 'a-medida']).optional(), // solo clientes
+      entrega: z.string().optional(),        // "2 semanas"
       captura: image(),                      // procesada por astro:assets
       capturaAlt: z.string(),
-      esDemo: z.boolean().default(true),     // TODO: false al tener clientes reales
+      tipo: z.enum(['cliente', 'propio', 'demo']),
+      sitio: z.string().url().optional(),    // link al sitio en vivo
       orden: z.number().int(),
       publicado: z.boolean().default(true),
     }),
@@ -533,7 +499,7 @@ contra `wrangler dev`, con los mismos cuatro resultados.*
 
 **Contenido:**
 - [x] Grep limpio en dist: `nosotros|innovador|siguiente nivel|pasión|transformación digital` — 0 resultados; "astro" solo en atributos técnicos del build.
-- [x] Los tres casos con `TODO: reemplazar por cliente real`, `esDemo: true` y etiqueta visible "Proyecto demo".
+- [x] Cada caso con su `tipo` y la etiqueta visible que le corresponde (propio/demo).
 - [x] Ningún resultado numérico en los casos.
 - [x] Precios visibles en home y /planes; A medida dice "cotización cerrada".
 

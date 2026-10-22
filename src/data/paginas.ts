@@ -5,6 +5,11 @@ export const PAGINA_TRABAJOS = {
   intro: 'Tres casos. En cada uno: cuál era el problema y qué cambió.',
   ctaTitulo: '¿Tu negocio necesita algo así?',
   cta: 'Cotizar por WhatsApp',
+  verCaso: 'Ver el caso',
+  verSitio: 'Visitar el sitio',
+  fichaPlan: 'Plan',
+  fichaEntrega: 'Entrega',
+  fichaSitio: 'En vivo',
   metaTitle: 'Trabajos — MetalMind Studios',
   metaDescription:
     'Tres casos de sitios web: el problema que tenía cada negocio y qué cambió con la página nueva.',
@@ -82,4 +87,11 @@ export const PAGINA_404 = {
   texto: 'El link está roto o la página se movió. Lo que buscas seguro está en el inicio.',
   cta: 'Ir al inicio',
   metaTitle: 'Página no encontrada — MetalMind Studios',
+} as const;
+
+/** Etiqueta visible junto al nombre del caso. Los de cliente no llevan etiqueta. */
+export const ETIQUETA_TIPO = {
+  cliente: null,
+  propio: 'Proyecto propio',
+  demo: 'Proyecto demo',
 } as const;
